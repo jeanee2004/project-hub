@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Start-Process \"C:\\\\Users\\\\223\\\\Desktop\\\\genia\\\\finance\\\\yakgwan-reader.html\")",
+      "WebSearch",
+      "WebFetch(domain:www.inthenews.co.kr)",
+      "WebFetch(domain:www.k-health.com)",
+      "WebFetch(domain:www.consumer.go.kr)",
+      "WebFetch(domain:www.dazabi.com)",
+      "WebFetch(domain:www.newsis.com)",
+      "WebFetch(domain:www.kimchang.com)",
+      "WebFetch(domain:www.doctorsnews.co.kr)",
+      "WebFetch(domain:www.kiri.or.kr)",
+      "WebFetch(domain:lfind.kr)",
+      "PowerShell(cortex *)",
+      "PowerShell(Get-ChildItem *)"
+    ]
+  },
+  "enabledPlugins": {
+    "snowflake-cortex-code@claude-plugins-official": true
+  }
+}

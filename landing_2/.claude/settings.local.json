@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Start-Process \"C:\\\\Users\\\\223\\\\Desktop\\\\genia\\\\landing_2\\\\landing.html\")",
+      "Bash(command -v ffprobe)",
+      "Bash(ffprobe -v error -show_entries stream=width,height,duration,codec_name -of default=noprint_wrappers=1 \"C:\\\\Users\\\\223\\\\Desktop\\\\genia\\\\landing_2\\\\heroex.mp4\")",
+      "PowerShell(Start-Process \"C:\\\\Users\\\\223\\\\Desktop\\\\genia\\\\landing_2\\\\landing.html\"; Start-Sleep -Milliseconds 500; Start-Process \"C:\\\\Users\\\\223\\\\Desktop\\\\genia\\\\landing_2\\\\pricing.html\")"
+    ]
+  }
+}

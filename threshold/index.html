@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>YunJin Yi® — HUB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@1.3.9/dist/web/static/pretendard.css">
+<style>
+  :root {
+    color-scheme: dark;
+    --void: #150B17;
+    --deep-plum: #2E1430;
+    --plum: #55234C;
+    --mauve: #8A6F8C;
+    --silver: #C9C4CC;
+    --light: #EFECF1;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--void);
+    overflow: hidden;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  canvas#gl {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .no-webgl canvas#gl { display: none; }
+  .no-webgl body { background: var(--void); }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    pointer-events: none;
+    color: var(--light);
+  }
+  .overlay > * { grid-area: 1 / 1; }
+  .overlay a { pointer-events: auto; }
+
+  .textblock {
+    background: rgba(21, 11, 23, 0.55);
+    padding: 24px 16px;
+    border-radius: 4px;
+    opacity: 1;
+    transition: opacity 0.2s ease-out;
+  }
+  body.loading .textblock { opacity: 0; pointer-events: none; }
+
+  .loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease-out;
+  }
+  body.loading .loader { opacity: 1; }
+  .loader-bar {
+    width: 160px;
+    height: 2px;
+    background: var(--deep-plum);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .loader-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--mauve);
+    transition: width 0.15s ease-out;
+  }
+  .loader-pct {
+    margin-top: 8px;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    color: var(--mauve);
+  }
+
+  .wordmark {
+    font-family: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+    text-transform: uppercase;
+  }
+  .wm-line {
+    display: block;
+    font-size: clamp(40px, 8vw, 96px);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: 0.08em;
+    color: var(--light);
+  }
+  .wm-sub {
+    margin-top: 8px;
+    font-size: clamp(20px, 4vw, 40px);
+    color: var(--mauve);
+  }
+  .enter {
+    margin-top: 48px;
+    display: inline-block;
+    font-family: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--light);
+    border: 1px solid currentColor;
+    border-radius: 4px;
+    padding: 16px 32px;
+    transition: transform 0.12s ease-out, opacity 0.12s ease-out;
+  }
+  .enter:hover {
+    transform: scale(1.06);
+    opacity: 0.75;
+  }
+
+  .no-webgl-msg { display: none; }
+  .no-webgl .no-webgl-msg { display: block; margin-top: 16px; font-size: 14px; color: var(--mauve); letter-spacing: 0.02em; }
+
+  /* ---------- intro -> gallery transition (design.md 6.2: 600ms expo.out) ---------- */
+  .overlay {
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  body.entered .overlay {
+    opacity: 0;
+    transform: translateY(-24px);
+    pointer-events: none;
+  }
+
+  .gallery {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: var(--void);
+    opacity: 0;
+    transform: translateY(40px);
+    pointer-events: none;
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  body.entered .gallery {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  body.no-anim .overlay,
+  body.no-anim .gallery {
+    transition: none !important;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .overlay, .gallery { transition-duration: 0.01ms !important; }
+  }
+
+  .gallery-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px 64px;
+  }
+  .gallery-head { padding: 16px 0 40px; }
+  .gallery-wordmark {
+    font-family: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--light);
+  }
+  .gallery-wordmark-sub { color: var(--mauve); margin-left: 8px; }
+
+  /* 무한 슬라이더 — 카드 세트를 두 벌 이어 붙이고 한 세트 폭만큼 이동시켜 이음매를 감춘다 */
+  .proj-marquee {
+    overflow: hidden;
+    margin-inline: calc(50% - 50vw);
+  }
+  .proj-track {
+    display: flex;
+    gap: 24px;
+    width: max-content;
+    padding: 8px 24px;
+    animation: marquee 48s linear infinite;
+  }
+  @keyframes marquee {
+    to { transform: translateX(calc(-50% - 12px)); }
+  }
+  .proj-marquee:hover .proj-track,
+  .proj-track:focus-within {
+    animation-play-state: paused;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .proj-track { animation: none; flex-wrap: wrap; width: auto; }
+  }
+
+  .proj-card {
+    position: relative;
+    width: 320px;
+    flex: none;
+    background: var(--deep-plum);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 24px;
+    padding-bottom: 64px;
+    text-align: left;
+    filter: blur(0.6px);
+    opacity: 0.78;
+    cursor: default;
+    transition: transform 0.15s ease-out, filter 0.15s ease-out,
+                opacity 0.15s ease-out, border-color 0.15s ease-out;
+  }
+  .proj-card:hover,
+  .proj-card:focus-visible {
+    transform: translateY(-4px);
+    filter: blur(0);
+    opacity: 1;
+    border-color: var(--plum);
+    outline: none;
+  }
+  .proj-thumb {
+    margin-bottom: 16px;
+    color: var(--mauve);
+  }
+  .proj-thumb svg {
+    display: block;
+    width: 32px;
+    height: 32px;
+  }
+  .proj-title {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--light);
+  }
+  .proj-summary {
+    margin-top: 8px;
+    font-family: 'Pretendard', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--silver);
+  }
+  .proj-tag {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 4px 12px;
+    border: 1px solid var(--mauve);
+    border-radius: 4px;
+    font-family: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mauve);
+  }
+  /* 잠금 안내 — 카드를 덮지 않고 하단에서 떠오른다.
+     전면 스크림은 호버 시 오히려 내용을 가려 "떠오르는" 인상과 반대가 된다. */
+  .proj-lock {
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--plum);
+    border-radius: 4px;
+    font-family: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    color: var(--light);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+    pointer-events: none;
+  }
+  .proj-lock svg { width: 16px; height: 16px; flex: none; }
+  .proj-card:hover .proj-lock,
+  .proj-card:focus-visible .proj-lock {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .gallery-footer {
+    margin-top: 64px;
+    font-family: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    color: var(--mauve);
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<canvas id="gl"></canvas>
+
+<div class="overlay">
+  <div class="loader" role="status" aria-live="polite">
+    <div class="loader-bar"><div class="loader-fill"></div></div>
+    <div class="loader-pct">0%</div>
+  </div>
+  <div class="textblock">
+    <div class="wordmark">
+      <span class="wm-line">YunJin Yi&reg;</span>
+      <span class="wm-line wm-sub">HUB</span>
+    </div>
+    <a class="enter" href="#/projects">Enter</a>
+    <p class="no-webgl-msg">WebGL2 is not available on this device.</p>
+  </div>
+</div>
+
+<section id="gallery" class="gallery" aria-hidden="true">
+  <div class="gallery-inner">
+    <div class="gallery-head">
+      <span class="gallery-wordmark">YunJin Yi&reg;<span class="gallery-wordmark-sub">HUB</span></span>
+    </div>
+    <div class="proj-marquee">
+      <div class="proj-track" id="proj-track"></div>
+    </div>
+    <p class="gallery-footer">&copy; 2026 YunJin Yi. All rights reserved.</p>
+  </div>
+</section>
+
+<script type="application/json" id="project-data">
+[
+  {
+    "slug": "koavis-work-experience",
+    "title": "코아비스 산학협력형 일경험 프로젝트",
+    "summary": "코아비스의 5개년 재무데이터를 분석해 신사업 방향을 제안한 산학협력 프로젝트",
+    "year": "2026",
+    "period": "2026.06 – 2026.07",
+    "type": "team",
+    "status": "published",
+    "role": "데이터셋 구축부터 시각화, 시장·기술 조사, 발표 준비까지 프로젝트 전반을 주도적으로 이끎",
+    "stack": ["Python 데이터 시각화", "재무제표 분석"],
+    "cover": "",
+    "images": [],
+    "problem": "자동차 부품 제조 중견기업 코아비스의 현직자 멘토와 함께 미래 사업 방향을 제안하는 프로젝트입니다. 코아비스의 연결 재무상태표 5개년 치를 직접 수집해 데이터셋을 구축하고, 파이썬으로 시각화하여 발표 근거로 활용했습니다.",
+    "decisions": [],
+    "learning": "",
+    "result": "코아비스의 워터펌프·연료펌프 기술력을 자동차 부품 제조업을 넘어 AI 시장 확대에 따라 성장 중인 데이터센터 열관리 부품 시장으로 확장하자는 결론을 제시했고, 실제 기업의 사업 추진 방향과 일치해 최우수상을 수상했습니다. 현직자·심사위원으로부터 기술을 이종 시장으로 확장하는 관점에 대한 호평과 함께 사업가적 기질을 인정받았습니다.",
+    "links": []
+  },
+  {
+    "slug": "jpmorgan-financial-analysis",
+    "title": "JP Morgan 기업 경영분석 프로젝트",
+    "summary": "JP Morgan 20개년 재무데이터를 시각화해 기업 경영을 분석한 프로젝트",
+    "year": "2026",
+    "period": "2026.05 – 2026.06",
+    "type": "team",
+    "status": "published",
+    "role": "코딩과 그래프 시각화를 통한 기업 재무상태 분석 담당",
+    "stack": ["바이브 코딩", "Python 데이터 시각화"],
+    "cover": "",
+    "images": [],
+    "problem": "JP Morgan의 비즈니스 모델과 기업 구조를 분석하고, 바이브 코딩으로 20개년 치 데이터셋에서 필요한 데이터만 추출해 그래프로 시각화했습니다. 대차대조표·재무상태표를 바탕으로 한 재무 분석도 함께 진행했습니다.",
+    "decisions": [],
+    "learning": "",
+    "result": "ROE, ROA 등 다양한 재무비율 분석을 효과적으로 진행하며 재무에 대한 이해도를 심화하고, 기업을 분석하는 통찰력을 길렀습니다.",
+    "links": []
+  },
+  {
+    "slug": "sejong-mice-capstone",
+    "title": "세종 MICE 아카데미 캡스톤 디자인 프로젝트",
+    "summary": "세종시 도시 브랜딩과 MICE 행사 기획을 제안한 캡스톤 프로젝트",
+    "year": "2026",
+    "period": "2026.07",
+    "type": "team",
+    "status": "published",
+    "role": "팀 프로젝트에서 도입 배경·목표 설정부터 장소 선정, MICE 제안까지 경영·비즈니스적 측면을 주도적으로 담당했고, PPT 제작과 발표도 직접 맡음",
+    "stack": ["비즈니스 기획", "PPT 제작 및 발표"],
+    "cover": "",
+    "images": [],
+    "problem": "세종리서치데이터연구소의 의뢰로 '1446 세종 공공정책콘텐츠 교류회' 행사 기획을 비롯한 세종시 도시 브랜딩 작업을 진행했습니다. '1446 세종'이라는 도시 브랜드의 필요성과 이를 알리는 플랫폼으로서 교류회의 필요성을 제시하고, 실제 장소 선정과 전시 구성 등 구체적인 MICE 제안으로 이어갔습니다.",
+    "decisions": [],
+    "learning": "",
+    "result": "'1446 세종' 브랜드 제안과 구체적인 MICE 실행안을 인정받아 종합 2위를 수상했습니다.",
+    "links": []
+  },
+  {
+    "slug": "incheon-young-mice-leader",
+    "title": "인천 Young MICE Leader 11기 썸머캠프",
+    "summary": "인천공항 환승객 대상 테마투어를 제안한 MICE 기획 프로젝트",
+    "year": "2026",
+    "period": "2026.07",
+    "type": "team",
+    "status": "published",
+    "role": "경영학적 관점에서 B2B 상생 모델과 후속 수익 연결 구조를 설계하는 등 비즈니스 로직 전반을 주도적으로 담당",
+    "stack": ["데이터 크롤링", "비즈니스 모델 설계"],
+    "cover": "",
+    "images": [],
+    "problem": "인천을 알리는 MICE 기획 프로젝트로, 인천관광공사·인천공항공사와 인천 내 소상공인·여행사의 상생을 통한 지역경제 활성화를 목표로 영종도를 시작점으로 하는 인천공항 환승 체류객 대상 테마투어를 제안했습니다.",
+    "decisions": [],
+    "learning": "",
+    "result": "기존 환승 투어의 실효성 부족이라는 페인포인트를 한국관광데이터랩·데이터포털·기사 크롤링으로 날카롭게 짚어내 호평을 받았습니다. 수상은 하지 못했지만 심사위원으로부터 \"질문의 깊이가 다르다\", \"현직 직무 경험자 같다\"는 평가를 받았습니다.",
+    "links": []
+  }
+]
+</script>
+
+<script>
+(function () {
+  var data = JSON.parse(document.getElementById('project-data').textContent);
+
+  // 단색 선형 아이콘 — design.md 9.1 (이모지 금지, 아이콘은 선형 단색만)
+  function svg(paths) {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+           'stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' +
+           paths + '</svg>';
+  }
+  var ICONS = {
+    // 재무 데이터셋 구축·시각화 → 막대 차트
+    'koavis-work-experience': svg('<path d="M3 21h18"/><path d="M7 21v-7"/><path d="M12 21V8"/><path d="M17 21v-4"/>'),
+    // 20개년 재무 추이 분석 → 상승 추세선
+    'jpmorgan-financial-analysis': svg('<path d="M3 3v18h18"/><path d="M6 15l4-4 3 2 5-6"/><path d="M14 7h4v4"/>'),
+    // 도시 브랜딩 → 스카이라인
+    'sejong-mice-capstone': svg('<path d="M3 21h18"/><path d="M5 21V9h6v12"/><path d="M13 21V5h6v16"/><path d="M7.5 12.5h1M7.5 16h1M15.5 8.5h1M15.5 12.5h1M15.5 16h1"/>'),
+    // 공항 환승 테마투어 → 항로
+    'incheon-young-mice-leader': svg('<path d="M21 3L11 13"/><path d="M21 3l-6.5 18-3.5-8-8-3.5z"/>')
+  };
+
+  var track = document.getElementById('proj-track');
+  var cards = data.map(function (p) {
+    var card = document.createElement('article');
+    card.className = 'proj-card';
+    card.tabIndex = 0;
+    card.setAttribute('aria-disabled', 'true');
+    card.setAttribute('aria-label', p.title + ' — 준비 중, 곧 공개됩니다');
+
+    var thumb = document.createElement('div');
+    thumb.className = 'proj-thumb';
+    thumb.setAttribute('aria-hidden', 'true');
+    thumb.innerHTML = ICONS[p.slug] || svg('<rect x="4" y="4" width="16" height="16"/>');
+
+    var title = document.createElement('h3');
+    title.className = 'proj-title';
+    title.textContent = p.title;
+
+    var summary = document.createElement('p');
+    summary.className = 'proj-summary';
+    summary.textContent = p.summary;
+
+    var tag = document.createElement('span');
+    tag.className = 'proj-tag';
+    tag.textContent = 'Coming Soon';
+
+    var lock = document.createElement('div');
+    lock.className = 'proj-lock';
+    lock.setAttribute('aria-hidden', 'true');
+    lock.innerHTML = svg('<rect x="4" y="10.5" width="16" height="10" rx="1.5"/>' +
+                         '<path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/>') +
+                     '<span>곧 열립니다</span>';
+
+    card.appendChild(thumb);
+    card.appendChild(title);
+    card.appendChild(summary);
+    card.appendChild(tag);
+    card.appendChild(lock);
+    return card;
+  });
+
+  cards.forEach(function (c) { track.appendChild(c); });
+  // 이음매를 메우는 복제본 — 보조기기에는 중복으로 읽히지 않게 숨긴다
+  cards.forEach(function (c) {
+    var clone = c.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    clone.removeAttribute('tabindex');
+    track.appendChild(clone);
+  });
+
+  var gallery = document.getElementById('gallery');
+  var overlay = document.querySelector('.overlay');
+  var enterLink = document.querySelector('.enter');
+  var entered = false;
+
+  function showGallery(skipAnim) {
+    if (entered) return;
+    entered = true;
+    gallery.setAttribute('aria-hidden', 'false');
+    if (overlay) overlay.setAttribute('aria-hidden', 'true');
+    if (skipAnim) document.body.classList.add('no-anim');
+    document.body.classList.add('entered');
+    if (!skipAnim && window.__triggerIntroBoost) window.__triggerIntroBoost(0.10);
+    if (skipAnim) {
+      requestAnimationFrame(function () {
+        document.body.classList.remove('no-anim');
+      });
+    }
+  }
+
+  enterLink.addEventListener('click', function (e) {
+    e.preventDefault();
+    try { sessionStorage.setItem('threshold_visited', '1'); } catch (err) {}
+    location.hash = '#/projects';
+    showGallery(false);
+  });
+
+  var skip = location.hash === '#/projects';
+  try { skip = skip || sessionStorage.getItem('threshold_visited') === '1'; } catch (err) {}
+  if (skip) showGallery(true);
+})();
+</script>
+
+<script>
+(function () {
+  var canvas = document.getElementById('gl');
+  var gl = canvas.getContext('webgl2', { antialias: false, alpha: false, preserveDrawingBuffer: false });
+  if (!gl) { document.documentElement.classList.add('no-webgl'); return; }
+
+  var floatExt = gl.getExtension('EXT_color_buffer_float');
+  var USE_FLOAT_FLUID = !!floatExt;
+
+  // background shader tuning — design.md 7.2
+  var CONFIG = {
+    strength: 0.05,    // 왜곡 기본 강도 (0.02 은은 ~ 0.15 과격)
+    decay: 0.94,       // 잔상 길이 (0.90 짧음 ~ 0.98 길게 남음)
+    ditherScale: 1.0,  // 도트 크기 배율
+    levels: 6          // 팔레트 단계 수 (팔레트 색상 수와 일치해야 함)
+  };
+
+  // transient boost added to CONFIG.strength during the intro → gallery transition,
+  // decayed each frame — PRD 4.1 "왜곡 강도를 일시적으로 증폭했다가 감쇠"
+  var introBoost = 0;
+  window.__triggerIntroBoost = function (v) { introBoost = v; };
+
+  document.body.classList.add('loading');
+  var loaderFill = document.querySelector('.loader-fill');
+  var loaderPct = document.querySelector('.loader-pct');
+  function setProgress(pct) {
+    if (loaderFill) loaderFill.style.width = pct + '%';
+    if (loaderPct) loaderPct.textContent = pct + '%';
+  }
+  setProgress(0);
+
+  // ---------- shader helpers ----------
+  function compile(type, src) {
+    var s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+      console.error(gl.getShaderInfoLog(s), src);
+      gl.deleteShader(s);
+      return null;
+    }
+    return s;
+  }
+  function createProgram(vsSrc, fsSrc) {
+    var vs = compile(gl.VERTEX_SHADER, vsSrc);
+    var fs = compile(gl.FRAGMENT_SHADER, fsSrc);
+    var p = gl.createProgram();
+    gl.attachShader(p, vs);
+    gl.attachShader(p, fs);
+    gl.linkProgram(p);
+    if (!gl.getProgramParameter(p, gl.LINK_STATUS)) {
+      console.error(gl.getProgramInfoLog(p));
+    }
+    return p;
+  }
+  function uniforms(program, names) {
+    var u = {};
+    for (var i = 0; i < names.length; i++) u[names[i]] = gl.getUniformLocation(program, names[i]);
+    return u;
+  }
+
+  // ---------- shared fullscreen-triangle vertex shader ----------
+  var VS = [
+    '#version 300 es',
+    'void main() {',
+    '  vec2 p = vec2((gl_VertexID << 1) & 2, gl_VertexID & 2);',
+    '  gl_Position = vec4(p * 2.0 - 1.0, 0.0, 1.0);',
+    '}'
+  ].join('\n');
+
+  // ---------- fluid sim fragment shader (ping-pong, encodes velocity as 0..1) ----------
+  var FLUID_FS = [
+    '#version 300 es',
+    'precision highp float;',
+    'uniform sampler2D uVelocity;',
+    'uniform vec2 uResolution;',
+    'uniform vec2 uMouse;',
+    'uniform vec2 uMouseVelocity;',
+    'uniform float uDt;',
+    'uniform float uDissipation;',
+    'uniform float uRadius;',
+    'out vec4 fragColor;',
+    'vec2 decode(vec2 e){ return e * 2.0 - 1.0; }',
+    'vec2 encode(vec2 v){ return clamp(v, -1.0, 1.0) * 0.5 + 0.5; }',
+    'void main() {',
+    '  vec2 uv = gl_FragCoord.xy / uResolution;',
+    '  vec2 vel = decode(texture(uVelocity, uv).xy);',
+    '  vec2 backUv = uv - vel * uDt * 0.5;',
+    '  vec2 advected = decode(texture(uVelocity, backUv).xy) * uDissipation;',
+    '  vec2 diff = uv - uMouse;',
+    '  diff.x *= uResolution.x / uResolution.y;',
+    '  float d2 = dot(diff, diff);',
+    '  float falloff = exp(-d2 / (uRadius * uRadius));',
+    '  advected += uMouseVelocity * falloff;',
+    '  advected = clamp(advected, vec2(-2.5), vec2(2.5));',
+    '  fragColor = vec4(encode(advected), 0.0, 1.0);',
+    '}'
+  ].join('\n');
+
+  // ---------- base pattern (rendered into scene FBO, distorted by fluid) ----------
+  var BASE_FS = [
+    '#version 300 es',
+    'precision highp float;',
+    'uniform sampler2D uFluid;',
+    'uniform vec2 uResolution;',
+    'uniform float uTime;',
+    'uniform float uStrength;',
+    'out vec4 fragColor;',
+    'float hash21(vec2 p){ p = fract(p*vec2(123.34,456.21)); p += dot(p,p+45.32); return fract(p.x*p.y); }',
+    'float noise(vec2 p){',
+    '  vec2 i = floor(p); vec2 f = fract(p);',
+    '  float a = hash21(i), b = hash21(i+vec2(1.0,0.0));',
+    '  float c = hash21(i+vec2(0.0,1.0)), d = hash21(i+vec2(1.0,1.0));',
+    '  vec2 u = f*f*(3.0-2.0*f);',
+    '  return mix(mix(a,b,u.x), mix(c,d,u.x), u.y);',
+    '}',
+    'void main() {',
+    '  vec2 uv = gl_FragCoord.xy / uResolution;',
+    '  vec2 vel = texture(uFluid, uv).xy * 2.0 - 1.0;',
+    '  vec2 duv = uv + vel * uStrength;',
+    '  vec2 p = duv; p.x *= uResolution.x / uResolution.y;',
+    '  float n = 0.0;',
+    '  n += noise(p*3.0 + uTime*0.03) * 0.55;',
+    '  n += noise(p*7.0 - uTime*0.05) * 0.28;',
+    '  n += noise(p*15.0 + uTime*0.02) * 0.17;',
+    '  float grad = 1.0 - distance(duv, vec2(0.5, 0.42)) * 0.9;',
+    '  float lum = clamp(n*0.65 + grad*0.35, 0.0, 1.0);',
+    '  fragColor = vec4(vec3(lum), 1.0);',
+    '}'
+  ].join('\n');
+
+  // ---------- particles ----------
+  var PARTICLE_VS = [
+    '#version 300 es',
+    'layout(location=0) in vec2 aPos;',
+    'layout(location=1) in float aLife;',
+    'layout(location=2) in float aSize;',
+    'out float vLife;',
+    'void main() {',
+    '  gl_Position = vec4(aPos, 0.0, 1.0);',
+    '  gl_PointSize = aSize * (0.35 + 0.65 * aLife);',
+    '  vLife = aLife;',
+    '}'
+  ].join('\n');
+  var PARTICLE_FS = [
+    '#version 300 es',
+    'precision highp float;',
+    'in float vLife;',
+    'out vec4 fragColor;',
+    'void main() {',
+    '  vec2 c = gl_PointCoord * 2.0 - 1.0;',
+    '  float d = dot(c, c);',
+    '  float alpha = smoothstep(1.0, 0.0, d) * vLife;',
+    '  fragColor = vec4(vec3(1.0), alpha);',
+    '}'
+  ].join('\n');
+
+  // ---------- final composite + 8x8 Bayer ordered dithering (last pass) ----------
+  var FINAL_FS = [
+    '#version 300 es',
+    'precision highp float;',
+    'uniform sampler2D uScene;',
+    'uniform vec2 uResolution;',
+    'uniform float uLevels;',
+    'uniform float uDitherScale;',
+    'out vec4 fragColor;',
+    'const float bayer8x8[64] = float[64](',
+    '   0.0,32.0, 8.0,40.0, 2.0,34.0,10.0,42.0,',
+    '  48.0,16.0,56.0,24.0,50.0,18.0,58.0,26.0,',
+    '  12.0,44.0, 4.0,36.0,14.0,46.0, 6.0,38.0,',
+    '  60.0,28.0,52.0,20.0,62.0,30.0,54.0,22.0,',
+    '   3.0,35.0,11.0,43.0, 1.0,33.0, 9.0,41.0,',
+    '  51.0,19.0,59.0,27.0,49.0,17.0,57.0,25.0,',
+    '  15.0,47.0, 7.0,39.0,13.0,45.0, 5.0,37.0,',
+    '  63.0,31.0,55.0,23.0,61.0,29.0,53.0,21.0);',
+    // Void / Deep plum / Plum / Mauve / Silver / Light — design.md 3.1
+    'const vec3 palette[6] = vec3[6](',
+    '  vec3(0.0824, 0.0431, 0.0902),',
+    '  vec3(0.1804, 0.0784, 0.1882),',
+    '  vec3(0.3333, 0.1373, 0.2980),',
+    '  vec3(0.5412, 0.4353, 0.5490),',
+    '  vec3(0.7882, 0.7686, 0.8000),',
+    '  vec3(0.9373, 0.9255, 0.9451)',
+    ');',
+    'void main() {',
+    '  vec3 col = texture(uScene, gl_FragCoord.xy / uResolution).rgb;',
+    '  ivec2 p = ivec2(mod(gl_FragCoord.xy / uDitherScale, 8.0));',
+    '  float threshold = (bayer8x8[p.y*8+p.x] + 0.5) / 64.0;',
+    '  float lum = floor(col.r * (uLevels - 1.0) + threshold);',
+    '  int idx = int(clamp(lum, 0.0, uLevels - 1.0));',
+    '  fragColor = vec4(palette[idx], 1.0);',
+    '}'
+  ].join('\n');
+
+  var fluidProgram = createProgram(VS, FLUID_FS);
+  var baseProgram = createProgram(VS, BASE_FS);
+  var particleProgram = createProgram(PARTICLE_VS, PARTICLE_FS);
+  var finalProgram = createProgram(VS, FINAL_FS);
+
+  var fluidU = uniforms(fluidProgram, ['uVelocity', 'uResolution', 'uMouse', 'uMouseVelocity', 'uDt', 'uDissipation', 'uRadius']);
+  var baseU = uniforms(baseProgram, ['uFluid', 'uResolution', 'uTime', 'uStrength']);
+  var finalU = uniforms(finalProgram, ['uScene', 'uResolution', 'uLevels', 'uDitherScale']);
+  setProgress(30);
+
+  var quadVAO = gl.createVertexArray();
+  var particleVAO = gl.createVertexArray();
+
+  // ---------- framebuffers ----------
+  function makeTarget() {
+    return { fbo: gl.createFramebuffer(), tex: gl.createTexture(), w: 0, h: 0 };
+  }
+  function resizeTarget(t, w, h, internalFormat, format, type, filter) {
+    t.w = w; t.h = h;
+    gl.bindTexture(gl.TEXTURE_2D, t.tex);
+    gl.texImage2D(gl.TEXTURE_2D, 0, internalFormat, w, h, 0, format, type, null);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, filter);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, filter);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, t.fbo);
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, t.tex, 0);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+  }
+
+  var fluidTargets = [makeTarget(), makeTarget()];
+  var sceneTarget = makeTarget();
+  var fluidIndex = 0;
+  var simRes = { w: 0, h: 0 };
+
+  var FLUID_FORMAT = USE_FLOAT_FLUID
+    ? { internalFormat: gl.RGBA16F, format: gl.RGBA, type: gl.HALF_FLOAT, filter: gl.LINEAR }
+    : { internalFormat: gl.RGBA8, format: gl.RGBA, type: gl.UNSIGNED_BYTE, filter: gl.LINEAR };
+
+  function resize() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = Math.max(1, Math.floor(window.innerWidth * dpr));
+    var h = Math.max(1, Math.floor(window.innerHeight * dpr));
+    canvas.width = w;
+    canvas.height = h;
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+
+    simRes.w = Math.max(1, Math.floor(w / 3));
+    simRes.h = Math.max(1, Math.floor(h / 3));
+    resizeTarget(fluidTargets[0], simRes.w, simRes.h, FLUID_FORMAT.internalFormat, FLUID_FORMAT.format, FLUID_FORMAT.type, FLUID_FORMAT.filter);
+    resizeTarget(fluidTargets[1], simRes.w, simRes.h, FLUID_FORMAT.internalFormat, FLUID_FORMAT.format, FLUID_FORMAT.type, FLUID_FORMAT.filter);
+    resizeTarget(sceneTarget, w, h, gl.RGBA8, gl.RGBA, gl.UNSIGNED_BYTE, gl.LINEAR);
+
+    // freshly (re)allocated textures start at 0, which decodes to velocity
+    // (-1,-1) under our *2-1 encoding, not zero. Clear to neutral (0.5) so
+    // the sim starts (and resizes) at rest instead of a spurious sweep.
+    gl.clearColor(0.5, 0.5, 0.0, 1.0);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fluidTargets[0].fbo);
+    gl.viewport(0, 0, simRes.w, simRes.h);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fluidTargets[1].fbo);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+  setProgress(60);
+
+  // ---------- mouse ----------
+  var mouse = { x: 0.5, y: 0.5, vx: 0, vy: 0 };
+  function setMouse(clientX, clientY) {
+    var nx = clientX / window.innerWidth;
+    var ny = 1.0 - clientY / window.innerHeight;
+    var dx = nx - mouse.x, dy = ny - mouse.y;
+    mouse.vx = dx * 6.0;
+    mouse.vy = dy * 6.0;
+    mouse.x = nx; mouse.y = ny;
+    maybeSpawnParticles(clientX, clientY, dx, dy);
+  }
+  window.addEventListener('pointermove', function (e) { setMouse(e.clientX, e.clientY); });
+  window.addEventListener('pointerdown', function (e) { setMouse(e.clientX, e.clientY); });
+
+  // ---------- particles (CPU-driven point sprites) ----------
+  var MAX_PARTICLES = 220;
+  var particles = [];
+  for (var i = 0; i < MAX_PARTICLES; i++) particles.push({ x: 0, y: 0, vx: 0, vy: 0, life: 0, maxLife: 1, size: 0, alive: false });
+  var particleCursor = 0;
+
+  function spawnParticle(x, y, vx, vy) {
+    var p = particles[particleCursor];
+    particleCursor = (particleCursor + 1) % MAX_PARTICLES;
+    p.x = x; p.y = y;
+    p.vx = vx; p.vy = vy;
+    p.maxLife = 0.6 + Math.random() * 0.5;
+    p.life = p.maxLife;
+    p.size = (10 + Math.random() * 14) * (window.devicePixelRatio || 1);
+    p.alive = true;
+  }
+
+  function maybeSpawnParticles(clientX, clientY, dx, dy) {
+    var speed = Math.hypot(dx, dy);
+    if (speed < 0.004) return;
+    var n = Math.min(3, Math.floor(speed * 260));
+    for (var i = 0; i < n; i++) {
+      var ang = Math.random() * Math.PI * 2;
+      var burst = 60 + Math.random() * 90;
+      spawnParticle(
+        clientX, clientY,
+        dx * window.innerWidth * 4 + Math.cos(ang) * burst,
+        -dy * window.innerHeight * 4 + Math.sin(ang) * burst
+      );
+    }
+  }
+
+  function updateParticles(dt) {
+    for (var i = 0; i < MAX_PARTICLES; i++) {
+      var p = particles[i];
+      if (!p.alive) continue;
+      p.life -= dt;
+      if (p.life <= 0) { p.alive = false; continue; }
+      p.vx *= 0.93;
+      p.vy *= 0.93;
+      p.x += p.vx * dt;
+      p.y += p.vy * dt;
+    }
+  }
+
+  var particleVBO = gl.createBuffer();
+  var particleData = new Float32Array(MAX_PARTICLES * 4);
+  function uploadParticles() {
+    var count = 0;
+    for (var i = 0; i < MAX_PARTICLES; i++) {
+      var p = particles[i];
+      if (!p.alive) continue;
+      particleData[count * 4 + 0] = (p.x / window.innerWidth) * 2.0 - 1.0;
+      particleData[count * 4 + 1] = -((p.y / window.innerHeight) * 2.0 - 1.0);
+      particleData[count * 4 + 2] = p.life / p.maxLife;
+      particleData[count * 4 + 3] = p.size;
+      count++;
+    }
+    gl.bindBuffer(gl.ARRAY_BUFFER, particleVBO);
+    gl.bufferData(gl.ARRAY_BUFFER, particleData.subarray(0, count * 4), gl.DYNAMIC_DRAW);
+    return count;
+  }
+  setProgress(85);
+
+  // ---------- render loop ----------
+  var last = performance.now();
+  var revealed = false;
+  function frame(now) {
+    var dt = Math.min((now - last) / 1000, 0.033);
+    last = now;
+
+    updateParticles(dt);
+
+    // 1) fluid sim pass
+    var src = fluidTargets[fluidIndex];
+    var dst = fluidTargets[1 - fluidIndex];
+    gl.bindFramebuffer(gl.FRAMEBUFFER, dst.fbo);
+    gl.viewport(0, 0, simRes.w, simRes.h);
+    gl.useProgram(fluidProgram);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, src.tex);
+    gl.uniform1i(fluidU.uVelocity, 0);
+    gl.uniform2f(fluidU.uResolution, simRes.w, simRes.h);
+    gl.uniform2f(fluidU.uMouse, mouse.x, mouse.y);
+    gl.uniform2f(fluidU.uMouseVelocity, mouse.vx, mouse.vy);
+    gl.uniform1f(fluidU.uDt, dt);
+    gl.uniform1f(fluidU.uDissipation, CONFIG.decay);
+    gl.uniform1f(fluidU.uRadius, 0.07);
+    gl.bindVertexArray(quadVAO);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    fluidIndex = 1 - fluidIndex;
+    mouse.vx *= 0.85;
+    mouse.vy *= 0.85;
+
+    // 2) base pattern + particles into scene target
+    gl.bindFramebuffer(gl.FRAMEBUFFER, sceneTarget.fbo);
+    gl.viewport(0, 0, sceneTarget.w, sceneTarget.h);
+    gl.disable(gl.BLEND);
+    gl.useProgram(baseProgram);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, fluidTargets[fluidIndex].tex);
+    gl.uniform1i(baseU.uFluid, 0);
+    gl.uniform2f(baseU.uResolution, sceneTarget.w, sceneTarget.h);
+    gl.uniform1f(baseU.uTime, now * 0.001);
+    gl.uniform1f(baseU.uStrength, CONFIG.strength + introBoost);
+    introBoost *= 0.965;
+    gl.bindVertexArray(quadVAO);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+    var pCount = uploadParticles();
+    if (pCount > 0) {
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+      gl.useProgram(particleProgram);
+      gl.bindVertexArray(particleVAO);
+      gl.bindBuffer(gl.ARRAY_BUFFER, particleVBO);
+      gl.enableVertexAttribArray(0);
+      gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 16, 0);
+      gl.enableVertexAttribArray(1);
+      gl.vertexAttribPointer(1, 1, gl.FLOAT, false, 16, 8);
+      gl.enableVertexAttribArray(2);
+      gl.vertexAttribPointer(2, 1, gl.FLOAT, false, 16, 12);
+      gl.drawArrays(gl.POINTS, 0, pCount);
+      gl.disable(gl.BLEND);
+    }
+
+    // 3) final composite + dithering (last pass, straight to screen)
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.useProgram(finalProgram);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, sceneTarget.tex);
+    gl.uniform1i(finalU.uScene, 0);
+    gl.uniform2f(finalU.uResolution, canvas.width, canvas.height);
+    gl.uniform1f(finalU.uLevels, CONFIG.levels);
+    gl.uniform1f(finalU.uDitherScale, CONFIG.ditherScale);
+    gl.bindVertexArray(quadVAO);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+    if (!revealed) {
+      revealed = true;
+      setProgress(100);
+      document.body.classList.remove('loading');
+    }
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

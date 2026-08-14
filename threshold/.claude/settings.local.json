@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c ' *)",
+      "Read(//c/Program Files/Google/Chrome/Application/**)",
+      "Read(//c/Program Files \\\\\\(x86\\\\\\)/Google/Chrome/Application/**)",
+      "Bash(npx --version)",
+      "Read(//c/Users/223/AppData/Local/**)",
+      "Bash('/c/Program Files/Google/Chrome/Application/chrome.exe' --headless=new --disable-gpu --enable-unsafe-swiftshader --use-angle=swiftshader --window-size=1440,900 --virtual-time-budget=5000 '--screenshot=C:\\\\Users\\\\223\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-223-Desktop-genia-threshold\\\\f2c0eb54-bbe8-4394-9b6e-c7579a5d7e0d\\\\scratchpad\\\\gallery.png' 'file:///C:/Users/223/Desktop/genia/threshold/index.html#/projects')",
+      "Bash('/c/Program Files/Google/Chrome/Application/chrome.exe' --headless=new --disable-gpu --enable-unsafe-swiftshader --use-angle=swiftshader --window-size=1440,900 --virtual-time-budget=5000 '--screenshot=C:\\\\Users\\\\223\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-223-Desktop-genia-threshold\\\\f2c0eb54-bbe8-4394-9b6e-c7579a5d7e0d\\\\scratchpad\\\\gallery2.png' 'file:///C:/Users/223/Desktop/genia/threshold/index.html#/projects')",
+      "Bash(node /c/Users/223/AppData/Local/Temp/claude/C--Users-223-Desktop-genia-threshold/f2c0eb54-bbe8-4394-9b6e-c7579a5d7e0d/scratchpad/drive.mjs /c/Users/223/AppData/Local/Temp/claude/C--Users-223-Desktop-genia-threshold/f2c0eb54-bbe8-4394-9b6e-c7579a5d7e0d/scratchpad)",
+      "Bash(taskkill //F //IM chrome.exe //T)",
+      "PowerShell(Start-Process \"C:\\\\Users\\\\223\\\\Desktop\\\\genia\\\\threshold\\\\index.html\")"
+    ]
+  }
+}

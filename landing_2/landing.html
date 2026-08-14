@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tacet - A Quiet Archive</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fon
+ts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:wght@400;500;600&amp;family=Caveat:wght@400&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed-variant": "#474747",
+                      "inverse-surface": "#2f3130",
+                      "primary-container": "#1b1b1b",
+                      "tertiary-container": "#1b1b1b",
+                      "surface-container-low": "#f4f4f2",
+                      "on-primary-container": "#848484",
+                      "on-error-container": "#93000a",
+                      "outline-variant": "#cfc4c5",
+                      "outline": "#7e7576",
+                      "tertiary-fixed-dim": "#c6c6c6",
+                      "slate-grey": "#4A4A4A",
+                      "on-surface": "#1a1c1b",
+                      "on-background": "#1a1c1b",
+                      "on-secondary-fixed-variant": "#464747",
+                      "mist-grey": "#E2E2E2",
+                      "ink-black": "#000000",
+                      "error-container": "#ffdad6",
+                      "surface-dim": "#dadad8",
+                      "secondary-fixed-dim": "#c7c6c6",
+                      "on-secondary-container": "#626263",
+                      "surface-container-high": "#e8e8e6",
+                      "surface": "#ffffff",
+                      "surface-variant": "#e2e3e1",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-tint": "#5e5e5e",
+                      "tertiary": "#000000",
+                      "secondary-container": "#e1dfdf",
+                      "on-secondary-fixed": "#1b1c1c",
+                      "on-tertiary-container": "#848484",
+                      "primary-fixed": "#e2e2e2",
+                      "on-surface-variant": "#4c4546",
+                      "background": "#ffffff",
+                      "surface-container": "#eeeeec",
+                      "inverse-on-surface": "#f1f1ef",
+                      "on-secondary": "#ffffff",
+                      "on-primary-fixed": "#1b1b1b",
+                      "on-tertiary-fixed-variant": "#474747",
+                      "canvas-off-white": "#F9F9F7",
+                      "surface-bright": "#ffffff",
+                      "inverse-primary": "#c6c6c6",
+                      "surface-container-highest": "#e2e3e1",
+                      "secondary": "#5e5e5e",
+                      "error": "#ba1a1a",
+                      "on-primary": "#ffffff",
+                      "primary-fixed-dim": "#c6c6c6",
+                      "primary": "#000000",
+                      "tertiary-fixed": "#e2e2e2",
+                      "paper-white": "#FFFFFF",
+                      "on-tertiary": "#ffffff",
+                      "secondary-fixed": "#e4e2e2",
+                      "on-tertiary-fixed": "#1b1b1b",
+                      "on-error": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "24px",
+                      "section-gap": "160px",
+                      "gutter": "32px",
+                      "margin-desktop": "80px",
+                      "hero-top-margin": "20vh"
+              },
+              "fontFamily": {
+                      "nav-link": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Playfair Display"
+                      ],
+                      "quote-block": [
+                              "Playfair Display"
+                      ],
+                      "headline-lg-mobile": [
+                              "Playfair Display"
+                      ],
+                      "headline-lg": [
+                              "Playfair Display"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "mono": [
+                              "JetBrains Mono"
+                      ]
+              },
+              "fontSize": {
+                      "nav-link": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.0",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "display-lg": [
+                              "72px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "quote-block": [
+                              "28px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.7",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .cursor-blink {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        
+        .typewriter-text {
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 0;
+            letter-spacing: .05em;
+            animation: typing 3.5s steps(40, end);
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+        
+        /* Mobile menu open state */
+        .menu-open {
+            overflow: hidden;
+        }
+        .menu-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .menu-open .menu-overlay {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        /* Scroll border */
+        .scrolled {
+            border-bottom: 1px solid #E2E2E2;
+        }
+
+        /* Grain texture for large quote section */
+        .texture-grain {
+            position: relative;
+        }
+        .texture-grain::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.05;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="bg-canvas-off-white text-on-surface antialiased selection:bg-ink-black selection:text-paper-white min-h-screen flex flex-col relative font-body-md text-body-md overflow-x-hidden">
+<!-- Navigation -->
+<nav class="fixed top-0 w-full flex justify-between items-center px-margin-mobile md:px-margin-desktop py-6 max-w-none z-50 bg-canvas-off-white/90 backdrop-blur-md transition-all duration-300" id="navbar">
+<a class="font-display-lg text-2xl md:text-3xl text-ink-black tracking-widest uppercase" href="#">Tacet</a>
+<!-- Desktop Nav Links -->
+<ul class="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
+<li><a class="font-nav-link text-nav-link text-secondary hover:text-ink-black transition-colors duration-300" href="#">Product</a></li>
+<li><a class="font-nav-link text-nav-link text-secondary hover:text-ink-black transition-colors duration-300" href="#">Platform</a></li>
+<li><a class="font-nav-link text-nav-link text-secondary hover:text-ink-black transition-colors duration-300" href="#">Security</a></li>
+<li><a class="font-nav-link text-nav-link text-secondary hover:text-ink-black transition-colors duration-300" href="#">Reviews</a></li>
+<li><a class="font-nav-link text-nav-link text-secondary hover:text-ink-black transition-colors duration-300" href="#">FAQ</a></li>
+<li><a class="font-nav-link text-nav-link text-secondary hover:text-ink-black transition-colors duration-300" href="#">About</a></li>
+</ul>
+<!-- Right Actions -->
+<div class="hidden md:flex items-center gap-6">
+<a class="font-nav-link text-nav-link text-secondary hover:text-ink-black transition-colors duration-300" href="#">Log in</a>
+<a class="font-nav-link text-nav-link text-ink-black border border-ink-black px-6 py-2 hover:bg-ink-black hover:text-paper-white transition-colors duration-300" href="#">Begin</a>
+</div>
+<!-- Mobile Hamburger -->
+<button class="md:hidden flex flex-col gap-1.5 z-[60]" id="mobile-menu-btn" onclick="toggleMobileMenu()">
+<span class="w-6 h-px bg-ink-black block transition-transform duration-300 origin-center" id="line1"></span>
+<span class="w-6 h-px bg-ink-black block transition-opacity duration-300" id="line2"></span>
+<span class="w-6 h-px bg-ink-black block transition-transform duration-300 origin-center" id="line3"></span>
+</button>
+</nav>
+<!-- Mobile Menu Overlay -->
+<div class="menu-overlay fixed inset-0 bg-canvas-off-white z-40 flex flex-col items-center justify-center pt-20 pb-10 px-margin-mobile">
+<ul class="flex flex-col items-center gap-8 w-full">
+<li><a class="font-display-lg text-4xl text-ink-black hover:text-secondary transition-colors" href="#">Product</a></li>
+<li><a class="font-display-lg text-4xl text-ink-black hover:text-secondary transition-colors" href="#">Platform</a></li>
+<li><a class="font-display-lg text-4xl text-ink-black hover:text-secondary transition-colors" href="#">Security</a></li>
+<li><a class="font-display-lg text-4xl text-ink-black hover:text-secondary transition-colors" href="#">Reviews</a></li>
+<li><a class="font-display-lg text-4xl text-ink-black hover:text-secondary transition-colors" href="#">FAQ</a></li>
+<li><a class="font-display-lg text-4xl text-ink-black hover:text-secondary transition-colors" href="#">About</a></li>
+<li class="mt-8 w-full max-w-xs flex flex-col gap-4">
+<a class="font-nav-link text-center text-nav-link text-secondary py-3 border border-mist-grey w-full" href="#">Log in</a>
+<a class="font-nav-link text-center text-nav-link text-paper-white bg-ink-black py-3 w-full" href="#">Begin</a>
+</li>
+</ul>
+</div>
+<main class="flex-grow">
+<!-- Hero Section -->
+<section class="relative pt-[200px] pb-32 px-margin-mobile md:px-margin-desktop flex flex-col items-center text-center overflow-hidden">
+<video autoplay="" class="absolute inset-0 w-full h-full object-cover grayscale" loop="" muted="" playsinline="">
+<source src="heroex.mp4" type="video/mp4"/>
+</video>
+<div class="absolute inset-0 bg-ink-black/55"></div>
+<div class="relative z-10 max-w-4xl w-full mx-auto flex flex-col items-center">
+<h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg text-paper-white mb-6 max-w-4xl mx-auto leading-tight">
+                        A quiet place for what you<br/>don't want to forget.
+                    </h1>
+<p class="font-body-lg text-body-lg text-mist-grey mb-10 max-w-2xl mx-auto">
+                        A curated archive for your thoughts and quotes.
+                    </p>
+<a class="inline-flex items-center gap-2 font-nav-link text-nav-link text-paper-white group border-b border-paper-white hover:text-mist-grey hover:border-mist-grey transition-all duration-300 pb-1 mb-24" href="#">
+                        Begin <span class="material-symbols-outlined text-sm transform group-hover:translate-x-1 transition-transform" style="font-variation-settings: 'FILL' 0;">arrow_forward</span>
+</a>
+<div class="w-full max-w-5xl mx-auto border border-mist-grey bg-canvas-off-white aspect-[16/9] flex items-center justify-center p-8 grayscale">
+<div class="bg-paper-white border border-mist-grey p-8 md:p-12 h-full flex flex-col justify-center w-full max-w-2xl shadow-sm">
+<p class="font-body-lg text-body-lg text-ink-black flex items-center typewriter-text">
+                                The quietest thoughts are often the most profound<span class="inline-block w-2 h-5 bg-ink-black ml-1 cursor-blink"></span>
+</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Platform Overview Section -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-canvas-off-white">
+<div class="max-w-6xl mx-auto">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-ink-black text-center mb-24">
+                    How Tacet works
+                </h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
+<!-- Dotted line connecting steps (Desktop only) -->
+<div class="hidden md:block absolute top-24 left-1/6 right-1/6 h-px border-t border-dashed border-mist-grey z-0 w-2/3 mx-auto"></div>
+<!-- Step 1 -->
+<div class="flex flex-col items-center text-center relative z-10">
+<div class="w-48 h-48 border border-mist-grey bg-paper-white mb-8 flex items-center justify-center p-4 grayscale">
+<div class="w-full h-full border border-mist-grey bg-surface-container-low flex flex-col justify-end p-2">
+<div class="h-2 w-1/2 bg-mist-grey mb-1"></div>
+<div class="h-2 w-3/4 bg-mist-grey"></div>
+</div>
+</div>
+<h3 class="font-display-lg text-2xl text-ink-black mb-4">Capture</h3>
+<p class="font-body-md text-secondary">A distraction-free interface for your thoughts.</p>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center text-center relative z-10">
+<div class="w-48 h-48 border border-mist-grey bg-paper-white mb-8 flex items-center justify-center p-4 grayscale">
+<div class="w-full h-full border border-mist-grey bg-surface-container-low flex flex-col gap-2 p-2">
+<div class="h-4 w-full bg-mist-grey/50 border border-mist-grey"></div>
+<div class="h-4 w-full bg-mist-grey/50 border border-mist-grey"></div>
+<div class="h-4 w-full bg-mist-grey/50 border border-mist-grey"></div>
+</div>
+</div>
+<h3 class="font-display-lg text-2xl text-ink-black mb-4">Organize</h3>
+<p class="font-body-md text-secondary">Tagging and categorization that fades into the background.</p>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center text-center relative z-10">
+<div class="w-48 h-48 border border-mist-grey bg-paper-white mb-8 flex items-center justify-center p-4 grayscale">
+<div class="w-full h-full border border-mist-grey bg-surface-container-low flex flex-col p-2">
+<div class="h-4 w-full bg-white border border-mist-grey mb-auto flex items-center px-2">
+<span class="material-symbols-outlined text-[10px] text-mist-grey">search</span>
+</div>
+</div>
+</div>
+<h3 class="font-display-lg text-2xl text-ink-black mb-4">Recall</h3>
+<p class="font-body-md text-secondary">Find exact phrases or serendipitous connections.</p>
+</div>
+</div>
+</div>
+</section><section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-canvas-off-white border-t border-mist-grey">
+<div class="max-w-7xl mx-auto">
+<h2 class="font-label-caps text-label-caps text-secondary text-center mb-24 uppercase tracking-widest">Core Features</h2>
+<div class="flex flex-col">
+<!-- Item 01 -->
+<div class="flex flex-col md:flex-row items-center justify-between py-12 border-b border-mist-grey gap-8">
+<div class="flex items-start gap-8 flex-grow">
+<span class="font-body-lg text-secondary opacity-50">01</span>
+<div>
+<h3 class="font-headline-lg text-2xl text-ink-black mb-2">Capture</h3>
+<p class="font-body-md text-secondary">한 문장, 한 인용, 한 생각을 그대로 저장.</p>
+</div>
+</div>
+<div class="w-48 h-32 bg-surface-container-low border border-mist-grey grayscale flex items-center justify-center">
+<span class="material-symbols-outlined text-mist-grey">image</span>
+</div>
+</div>
+<!-- Item 02 -->
+<div class="flex flex-col md:flex-row items-center justify-between py-12 border-b border-mist-grey gap-8">
+<div class="flex items-start gap-8 flex-grow">
+<span class="font-body-lg text-secondary opacity-50">02</span>
+<div>
+<h3 class="font-headline-lg text-2xl text-ink-black mb-2">Archive</h3>
+<p class="font-body-md text-secondary">시간순이 아닌 의미로 재구성되는 개인 서고.</p>
+</div>
+</div>
+<div class="w-48 h-32 bg-surface-container-low border border-mist-grey grayscale flex items-center justify-center">
+<span class="material-symbols-outlined text-mist-grey">image</span>
+</div>
+</div>
+<!-- Item 03 -->
+<div class="flex flex-col md:flex-row items-center justify-between py-12 border-b border-mist-grey gap-8">
+<div class="flex items-start gap-8 flex-grow">
+<span class="font-body-lg text-secondary opacity-50">03</span>
+<div>
+<h3 class="font-headline-lg text-2xl text-ink-black mb-2">Recall</h3>
+<p class="font-body-md text-secondary">필요할 때 조용히 다시 떠오르는 기록.</p>
+</div>
+</div>
+<div class="w-48 h-32 bg-surface-container-low border border-mist-grey grayscale flex items-center justify-center">
+<span class="material-symbols-outlined text-mist-grey">image</span>
+</div>
+</div>
+<!-- Item 04 -->
+<div class="flex flex-col md:flex-row items-center justify-between py-12 border-b border-mist-grey gap-8">
+<div class="flex items-start gap-8 flex-grow">
+<span class="font-body-lg text-secondary opacity-50">04</span>
+<div>
+<h3 class="font-headline-lg text-2xl text-ink-black mb-2">Connect</h3>
+<p class="font-body-md text-secondary">기록들 사이의 맥락을 스스로 발견하는 아카이브.</p>
+</div>
+</div>
+<div class="w-48 h-32 bg-surface-container-low border border-mist-grey grayscale flex items-center justify-center">
+<span class="material-symbols-outlined text-mist-grey">image</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Manifesto & Product -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-ink-black text-paper-white border-y border-mist-grey">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center max-w-7xl mx-auto">
+<div class="md:col-span-5 md:col-start-2">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-paper-white leading-tight">
+                        Thoughts deserve to be kept with intention.
+                    </h2>
+</div>
+<div class="md:col-span-4 md:col-start-8 mt-12 md:mt-0 relative">
+<div class="aspect-[4/5] bg-ink-black border border-on-primary-fixed-variant p-8 flex items-center justify-center relative overflow-hidden grayscale">
+<div class="bg-ink-black border border-on-primary-fixed-variant p-6 w-full max-w-xs transform translate-y-4 -rotate-2">
+<p class="font-body-md text-body-md text-secondary mb-4 line-clamp-3">
+                                "The difference between what we do and what we are capable of doing would suffice to solve most of the world's problems."
+                            </p>
+<p class="font-label-caps text-label-caps text-paper-white">Mahatma Gandhi</p>
+</div>
+</div>
+</div>
+</div>
+</section><section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-canvas-off-white">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center max-w-7xl mx-auto">
+<div class="md:col-span-5">
+<h2 class="font-display-lg text-headline-lg-mobile md:text-headline-lg text-ink-black leading-tight">
+                Capture what matters. Quietly.
+            </h2>
+</div>
+<div class="md:col-span-6 md:col-start-7">
+<div class="aspect-[16/9] bg-paper-white border border-mist-grey p-6 flex flex-col gap-4 grayscale shadow-sm">
+<div class="h-12 w-3/4 bg-surface-container-low border border-mist-grey"></div>
+<div class="h-12 w-full bg-surface-container-low border border-mist-grey"></div>
+<div class="h-12 w-2/3 bg-surface-container-low border border-mist-grey"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Features Section -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-canvas-off-white">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter max-w-7xl mx-auto">
+<div class="md:col-span-8 md:col-start-3">
+<div class="border-t border-ink-black">
+<!-- Accordion 01 -->
+<div class="accordion-item border-b border-ink-black">
+<button class="w-full flex justify-between items-center py-8 text-left group" onclick="toggleAccordion(this)">
+<span class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-secondary group-hover:text-ink-black transition-colors duration-300">
+<span class="font-label-caps text-label-caps mr-6 align-top">01</span>Capture
+                                </span>
+<span class="material-symbols-outlined text-ink-black font-light transform transition-transform duration-300">add</span>
+</button>
+<div class="accordion-content">
+<p class="font-body-lg text-body-lg text-secondary pb-8 max-w-2xl pl-16">
+                                    A distraction-free interface designed solely for getting your thoughts out of your head and onto the page. No formatting bars, no popups. Just pure text.
+                                </p>
+</div>
+</div>
+<!-- Accordion 02 -->
+<div class="accordion-item border-b border-ink-black">
+<button class="w-full flex justify-between items-center py-8 text-left group" onclick="toggleAccordion(this)">
+<span class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-secondary group-hover:text-ink-black transition-colors duration-300">
+<span class="font-label-caps text-label-caps mr-6 align-top">02</span>Archive
+                                </span>
+<span class="material-symbols-outlined text-ink-black font-light transform transition-transform duration-300">add</span>
+</button>
+<div class="accordion-content">
+<p class="font-body-lg text-body-lg text-secondary pb-8 max-w-2xl pl-16">
+                                    Organize with minimal friction. Tagging and subtle categorization that fades into the background until you need it, ensuring your archive remains orderly without effort.
+                                </p>
+</div>
+</div>
+<!-- Accordion 03 -->
+<div class="accordion-item border-b border-ink-black">
+<button class="w-full flex justify-between items-center py-8 text-left group" onclick="toggleAccordion(this)">
+<span class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-secondary group-hover:text-ink-black transition-colors duration-300">
+<span class="font-label-caps text-label-caps mr-6 align-top">03</span>Recall
+                                </span>
+<span class="material-symbols-outlined text-ink-black font-light transform transition-transform duration-300">add</span>
+</button>
+<div class="accordion-content">
+<p class="font-body-lg text-body-lg text-secondary pb-8 max-w-2xl pl-16">
+                                    Powerful, instant search that respects context. Find exact phrases, vague recollections, or serendipitous connections within your private corpus.
+                                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-ink-black text-paper-white">
+<div class="max-w-7xl mx-auto">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg mb-24">Your thoughts stay yours.</h2>
+<div class="grid grid-cols-1 md:grid-cols-4 border-t border-on-primary-fixed-variant">
+<div class="py-12 border-b md:border-b-0 md:border-r border-on-primary-fixed-variant md:pr-8">
+<p class="font-body-lg">End-to-end encryption</p>
+</div>
+<div class="py-12 border-b md:border-b-0 md:border-r border-on-primary-fixed-variant md:px-8">
+<p class="font-body-lg">No data selling</p>
+</div>
+<div class="py-12 border-b md:border-b-0 md:border-r border-on-primary-fixed-variant md:px-8">
+<p class="font-body-lg">Export anytime</p>
+</div>
+<div class="py-12 border-b md:border-b-0 border-on-primary-fixed-variant md:pl-8">
+<p class="font-body-lg">Private by default</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Quote Section -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-ink-black text-paper-white flex items-center min-h-[500px]">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter w-full max-w-7xl mx-auto">
+<div class="md:col-span-8 md:col-start-3 relative pl-8 border-l border-on-primary-fixed-variant">
+<h3 class="font-quote-block text-headline-lg-mobile md:text-quote-block text-paper-white leading-relaxed">
+                        "The silence of the archive is where the mind speaks loudest."
+                    </h3>
+</div>
+</div>
+</section>
+<!-- Trust Section -->
+<section class="py-24 px-margin-mobile md:px-margin-desktop text-center border-b border-mist-grey bg-canvas-off-white">
+<p class="font-label-caps text-label-caps text-secondary tracking-widest uppercase">
+                Trusted by writers, researchers, and quiet thinkers.
+            </p>
+</section>
+<!-- Expert Panel Section -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-canvas-off-white">
+<div class="max-w-7xl mx-auto">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-ink-black text-center mb-20">Endorsed by people who think for a living</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<div class="flex flex-col">
+<div class="aspect-[3/4] bg-surface-container-low mb-6 flex items-center justify-center grayscale rounded-none overflow-hidden">
+<span class="material-symbols-outlined text-4xl text-mist-grey">person</span>
+</div>
+<div class="border-b border-mist-grey pb-6 mb-6">
+<p class="font-body-lg text-ink-black font-semibold">Elena Rostova</p>
+<p class="font-body-md text-secondary">Writer</p>
+</div>
+<p class="font-body-md text-ink-black">"A sanctuary for my fragmented ideas before they become prose."</p>
+</div>
+<div class="flex flex-col">
+<div class="aspect-[3/4] bg-surface-container-low mb-6 flex items-center justify-center grayscale rounded-none overflow-hidden">
+<span class="material-symbols-outlined text-4xl text-mist-grey">person</span>
+</div>
+<div class="border-b border-mist-grey pb-6 mb-6">
+<p class="font-body-lg text-ink-black font-semibold">David Chen</p>
+<p class="font-body-md text-secondary">Researcher</p>
+</div>
+<p class="font-body-md text-ink-black">"Finally, a tool that respects the weight of plain text."</p>
+</div>
+<div class="flex flex-col">
+<div class="aspect-[3/4] bg-surface-container-low mb-6 flex items-center justify-center grayscale rounded-none overflow-hidden">
+<span class="material-symbols-outlined text-4xl text-mist-grey">person</span>
+</div>
+<div class="border-b border-mist-grey pb-6 mb-6">
+<p class="font-body-lg text-ink-black font-semibold">Sarah Jenkins</p>
+<p class="font-body-md text-secondary">Editor</p>
+</div>
+<p class="font-body-md text-ink-black">"It’s just you and your thoughts. The clarity is unmatched."</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Client Review Section -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-[#F7F7F7]">
+<div class="max-w-7xl mx-auto">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-ink-black text-center mb-20">What people keep in Tacet</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-16">
+<div class="flex flex-col justify-between h-full gap-8">
+<p class="font-quote-block text-2xl text-ink-black">"Every passage from a book that made me pause, collected without the noise of a social feed."</p>
+<div class="flex items-center gap-4 mt-auto">
+<div class="w-12 h-12 rounded-full bg-mist-grey flex items-center justify-center text-ink-black font-semibold">M</div>
+<div>
+<p class="font-body-md text-ink-black font-semibold">Marcus T.</p>
+<p class="font-body-md text-secondary text-sm">Novelist</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col justify-between h-full gap-8">
+<p class="font-quote-block text-2xl text-ink-black">"The fleeting ideas that usually get lost in endless digital notebooks, now quietly preserved."</p>
+<div class="flex items-center gap-4 mt-auto">
+<div class="w-12 h-12 rounded-full bg-mist-grey flex items-center justify-center text-ink-black font-semibold">A</div>
+<div>
+<p class="font-body-md text-ink-black font-semibold">Anna K.</p>
+<p class="font-body-md text-secondary text-sm">Academic</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col justify-between h-full gap-8">
+<p class="font-quote-block text-2xl text-ink-black">"A private museum of observations. No likes, no comments. Just meaning."</p>
+<div class="flex items-center gap-4 mt-auto">
+<div class="w-12 h-12 rounded-full bg-mist-grey flex items-center justify-center text-ink-black font-semibold">J</div>
+<div>
+<p class="font-body-md text-ink-black font-semibold">Julian F.</p>
+<p class="font-body-md text-secondary text-sm">Philosopher</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Large Quote Section -->
+<section class="h-screen px-margin-mobile md:px-margin-desktop bg-ink-black text-paper-white flex flex-col items-center justify-center texture-grain">
+<div class="max-w-5xl mx-auto text-center relative z-10">
+<h2 class="font-display-lg text-4xl md:text-6xl lg:text-[80px] leading-tight text-paper-white">
+        "The things I didn't want to lose, I kept here."
+    </h2>
+</div>
+</section>
+<!-- Gallery / Use Case Section -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-canvas-off-white">
+<div class="max-w-7xl mx-auto">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-ink-black text-center mb-20">See what a quiet archive looks like</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Quote Card -->
+<div class="bg-paper-white border border-mist-grey p-10 md:p-16 flex flex-col justify-center min-h-[400px]">
+<p class="font-quote-block text-2xl md:text-3xl text-ink-black mb-6">"Simplicity is the final achievement. After one has played a vast quantity of notes and more notes, it is simplicity that emerges as the crowning reward of art."</p>
+<p class="font-label-caps text-secondary uppercase tracking-widest">Frédéric Chopin</p>
+</div>
+<!-- Link Card -->
+<div class="bg-paper-white border border-mist-grey p-10 md:p-16 flex flex-col justify-center min-h-[400px]">
+<h3 class="font-headline-lg text-3xl text-ink-black mb-4">The Architecture of Silence</h3>
+<a class="font-body-md text-secondary hover:text-ink-black underline decoration-1 underline-offset-4" href="#">https://essays.design/architecture-of-silence</a>
+</div>
+<!-- Short Note Card -->
+<div class="bg-paper-white border border-mist-grey p-10 md:p-16 flex flex-col justify-center min-h-[400px]">
+<p class="font-mono text-lg text-ink-black whitespace-pre-line">
+            // Note to self
+            
+            Look into the history of margins in medieval manuscripts. 
+            The space left intentionally blank is as important as the text itself.
+        </p>
+</div>
+<!-- Image + Caption Card -->
+<div class="bg-paper-white border border-mist-grey p-10 md:p-16 flex flex-col items-center justify-center min-h-[400px]">
+<div class="w-full h-48 bg-surface-container-low mb-6 flex items-center justify-center grayscale">
+<span class="material-symbols-outlined text-4xl text-mist-grey">image</span>
+</div>
+<p class="font-body-sm text-secondary text-sm text-center">Kyoto, 2019. The moss garden at Saiho-ji.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-canvas-off-white">
+<div class="max-w-4xl mx-auto">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-ink-black text-center mb-16">
+    Questions, answered quietly
+</h2>
+<div class="border-t border-mist-grey">
+<!-- FAQ 1 -->
+<div class="accordion-item border-b border-mist-grey">
+<button class="w-full flex justify-between items-center py-6 text-left group" onclick="toggleAccordion(this)">
+<span class="font-body-lg text-ink-black pr-8">What makes Tacet different from a notes app?</span>
+<span class="material-symbols-outlined text-ink-black font-light transform transition-transform duration-300">add</span>
+</button>
+<div class="accordion-content">
+<p class="font-body-md text-secondary pb-6">Tacet is designed specifically for archiving and recalling thoughts and quotes without the clutter of formatting tools or social features.</p>
+</div>
+</div>
+<!-- FAQ 2 -->
+<div class="accordion-item border-b border-mist-grey">
+<button class="w-full flex justify-between items-center py-6 text-left group" onclick="toggleAccordion(this)">
+<span class="font-body-lg text-ink-black pr-8">Can I import my existing notes?</span>
+<span class="material-symbols-outlined text-ink-black font-light transform transition-transform duration-300">add</span>
+</button>
+<div class="accordion-content">
+<p class="font-body-md text-secondary pb-6">Yes, Tacet supports importing plain text, markdown, and CSV files from most major note-taking applications.</p>
+</div>
+</div>
+<!-- FAQ 3 -->
+<div class="accordion-item border-b border-mist-grey">
+<button class="w-full flex justify-between items-center py-6 text-left group" onclick="toggleAccordion(this)">
+<span class="font-body-lg text-ink-black pr-8">Is my data private?</span>
+<span class="material-symbols-outlined text-ink-black font-light transform transition-transform duration-300">add</span>
+</button>
+<div class="accordion-content">
+<p class="font-body-md text-secondary pb-6">Absolutely. We use end-to-end encryption, meaning only you can read your notes. We never sell your data.</p>
+</div>
+</div>
+<!-- FAQ 4 -->
+<div class="accordion-item border-b border-mist-grey">
+<button class="w-full flex justify-between items-center py-6 text-left group" onclick="toggleAccordion(this)">
+<span class="font-body-lg text-ink-black pr-8">Does Tacet work offline?</span>
+<span class="material-symbols-outlined text-ink-black font-light transform transition-transform duration-300">add</span>
+</button>
+<div class="accordion-content">
+<p class="font-body-md text-secondary pb-6">Yes, our desktop and mobile apps allow you to access and create notes completely offline. Changes sync when you reconnect.</p>
+</div>
+</div>
+<!-- FAQ 5 -->
+<div class="accordion-item border-b border-mist-grey">
+<button class="w-full flex justify-between items-center py-6 text-left group" onclick="toggleAccordion(this)">
+<span class="font-body-lg text-ink-black pr-8">What platforms are supported?</span>
+<span class="material-symbols-outlined text-ink-black font-light transform transition-transform duration-300">add</span>
+</button>
+<div class="accordion-content">
+<p class="font-body-md text-secondary pb-6">Tacet is available on Web, macOS, Windows, iOS, and Android.</p>
+</div>
+</div>
+<!-- FAQ 6 -->
+<div class="accordion-item border-b border-mist-grey">
+<button class="w-full flex justify-between items-center py-6 text-left group" onclick="toggleAccordion(this)">
+<span class="font-body-lg text-ink-black pr-8">How much does it cost?</span>
+<span class="material-symbols-outlined text-ink-black font-light transform transition-transform duration-300">add</span>
+</button>
+<div class="accordion-content">
+<p class="font-body-md text-secondary pb-6">Tacet offers a generous free tier for basic usage. For unlimited storage and advanced features, our premium plan is $5/month.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Closing CTA -->
+<section class="py-[15vh] px-margin-mobile md:px-margin-desktop text-center flex flex-col items-center justify-center bg-paper-white">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-ink-black mb-12 max-w-3xl">
+                Some things deserve to be kept quietly.
+            </h2>
+<a class="inline-block bg-ink-black text-paper-white px-8 py-4 font-nav-link text-nav-link hover:bg-secondary hover:text-paper-white transition-colors duration-300" href="#">
+                Start your archive
+            </a>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-mist-grey bg-canvas-off-white px-margin-mobile md:px-margin-desktop py-16 md:py-24">
+<div class="max-w-7xl mx-auto flex flex-col gap-16">
+<div class="grid grid-cols-1 md:grid-cols-6 gap-12 md:gap-8">
+<div class="md:col-span-2 flex flex-col gap-4">
+<div class="font-display-lg text-2xl text-ink-black tracking-widest uppercase">Tacet</div>
+<p class="font-body-md text-secondary text-sm max-w-xs">A quiet place for what you don't want to forget.</p>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-label-caps text-ink-black tracking-widest uppercase mb-2">Product</h4>
+<a class="font-body-md text-sm text-secondary hover:text-ink-black transition-colors" href="#">Overview</a>
+<a class="font-body-md text-sm text-secondary hover:text-ink-black transition-colors" href="#">Features</a>
+<a class="font-body-md text-sm text-secondary hover:text-ink-black transition-colors" href="#">Security</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-label-caps text-ink-black tracking-widest uppercase mb-2">Company</h4>
+<a class="font-body-md text-sm text-secondary hover:text-ink-black transition-colors" href="#">About</a>
+<a class="font-body-md text-sm text-secondary hover:text-ink-black transition-colors" href="#">Careers</a>
+<a class="font-body-md text-sm text-secondary hover:text-ink-black transition-colors" href="#">Contact</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-label-caps text-ink-black tracking-widest uppercase mb-2">Resources</h4>
+<a class="font-body-md text-sm text-secondary hover:text-ink-black transition-colors" href="#">FAQ</a>
+<a class="font-body-md text-sm text-secondary hover:text-ink-black transition-colors" href="#">Blog</a>
+<a class="font-body-md text-sm text-secondary hover:text-ink-black transition-colors" href="#">Guides</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-label-caps text-ink-black tracking-widest uppercase mb-2">Legal</h4>
+<a class="font-body-md text-sm text-secondary hover:text-ink-black transition-colors" href="#">Privacy</a>
+<a class="font-body-md text-sm text-secondary hover:text-ink-black transition-colors" href="#">Terms</a>
+</div>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-center gap-6 border-t border-mist-grey pt-8">
+<p class="font-body-md text-sm text-secondary">© Tacet Archive. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="text-secondary hover:text-ink-black transition-colors" href="#">
+<span class="material-symbols-outlined font-light text-xl">link</span>
+</a>
+<a class="text-secondary hover:text-ink-black transition-colors" href="#">
+<span class="material-symbols-outlined font-light text-xl">mail</span>
+</a>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        function toggleAccordion(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('.material-symbols-outlined');
+            
+            // Close all others
+            document.querySelectorAll('.accordion-content').forEach(el => {
+                if(el !== content) {
+                    el.style.maxHeight = null;
+                    el.previousElementSibling.querySelector('.material-symbols-outlined').style.transform = 'rotate(0deg)';
+                    el.previousElementSibling.querySelector('.material-symbols-outlined').textContent = 'add';
+                }
+            });
+
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                icon.style.transform = 'rotate(0deg)';
+                icon.textContent = 'add';
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                icon.style.transform = 'rotate(180deg)';
+                icon.textContent = 'remove';
+            }
+        }
+        
+        function toggleMobileMenu() {
+            document.body.classList.toggle('menu-open');
+            const l1 = document.getElementById('line1');
+            const l2 = document.getElementById('line2');
+            const l3 = document.getElementById('line3');
+            
+            if (document.body.classList.contains('menu-open')) {
+                l1.style.transform = 'translateY(7px) rotate(45deg)';
+                l2.style.opacity = '0';
+                l3.style.transform = 'translateY(-7px) rotate(-45deg)';
+            } else {
+                l1.style.transform = 'none';
+                l2.style.opacity = '1';
+                l3.style.transform = 'none';
+            }
+        }
+        
+        // Scroll listener for nav border
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 10) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body></html>

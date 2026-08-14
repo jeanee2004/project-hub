@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>다시읽기 — 내 실손보험 약관 해독기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#15171C;
+  --ink-2:#4A4F5A;
+  --ink-3:#7B818D;
+  --paper:#FFFFFF;
+  --card:#FFFFFF;
+  --surface-soft:#F5F6F8;
+  --rule:#E3E5E9;
+  --rule-2:#EDEFF2;
+  --primary:#0064E0;
+  --primary-deep:#0457CB;
+  --primary-soft:#E5F0FE;
+  --success:#31A24C;
+  --success-soft:#E4F5E9;
+  --flag:#F2A918;
+  --flag-soft:#FDF1DC;
+  --danger:#E41E3F;
+  --danger-soft:#FCE6EA;
+  --sans:'Noto Sans KR',-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --base:16px;
+  --gap:20px;
+  --section-gap:56px;
+  --radius:12px;
+  --radius-pill:999px;
+}
+body.slow{ --base:21px; --gap:28px; --section-gap:72px; }
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:var(--base);
+  line-height:1.7;
+  letter-spacing:-0.01em;
+  padding-bottom:80px;
+  overflow-x:hidden;
+}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px}
+
+/* ---------- 헤더 ---------- */
+.topbar{
+  border-bottom:1px solid var(--rule);
+  background:var(--paper);
+  position:sticky;top:0;z-index:50;
+}
+.topbar .wrap{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;padding-top:14px;padding-bottom:14px;flex-wrap:wrap;
+}
+.brand{display:flex;align-items:baseline;gap:10px}
+.brand b{
+  font-family:var(--sans);font-size:1.3rem;font-weight:800;
+  letter-spacing:-0.01em;
+}
+.brand span{font-size:0.72rem;color:var(--ink-3);letter-spacing:0.06em}
+
+.topbar-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+.lang-toggle{display:flex;gap:4px}
+.lang-toggle button{
+  font-family:inherit;font-size:0.72rem;font-weight:700;
+  padding:6px 12px;border:1px solid var(--rule);border-radius:var(--radius-pill);
+  background:var(--card);color:var(--ink-2);cursor:pointer;line-height:1.2;
+}
+.lang-toggle button[aria-pressed="true"]{background:var(--surface-soft);color:var(--ink);border-color:var(--ink-3)}
+.lang-toggle button:disabled{opacity:0.4;cursor:not-allowed}
+.lang-toggle button:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+
+.modes{display:flex;gap:8px}
+.modes button{
+  font-family:inherit;font-size:0.8rem;font-weight:700;
+  padding:8px 16px;border:1px solid var(--rule);border-radius:var(--radius-pill);
+  background:var(--card);color:var(--ink);
+  cursor:pointer;line-height:1.2;
+}
+.modes button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.modes button:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+
+/* ---------- 히어로 ---------- */
+.hero{padding:52px 0 12px}
+.eyebrow{
+  display:inline-block;font-size:0.72rem;letter-spacing:0.1em;color:var(--ink-2);
+  font-weight:700;margin-bottom:20px;
+  background:var(--surface-soft);padding:6px 14px;border-radius:var(--radius-pill);
+}
+.hero h1{
+  font-family:var(--sans);font-weight:900;
+  font-size:clamp(1.9rem,5.4vw,2.9rem);line-height:1.28;
+  letter-spacing:-0.02em;margin-bottom:18px;
+}
+.hero h1 em{font-style:normal;color:var(--primary)}
+.hero p{color:var(--ink-2);max-width:44em;font-size:0.98rem}
+
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+  margin-top:34px;
+}
+.stat{padding:20px 18px;background:var(--surface-soft);border-radius:var(--radius)}
+.stat b{
+  display:block;font-family:var(--sans);font-size:1.7rem;font-weight:900;
+  line-height:1.2;letter-spacing:-0.02em;
+}
+.stat small{display:block;font-size:0.72rem;color:var(--ink-3);margin-top:6px;line-height:1.5}
+
+/* ---------- 입력 ---------- */
+.panel{
+  background:var(--surface-soft);
+  margin-top:var(--section-gap);padding:36px 0;
+  width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
+}
+.panel-inner{max-width:820px;margin:0 auto;padding:0 20px}
+.step-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:50%;
+  background:var(--primary);color:#fff;font-weight:800;font-size:0.85rem;
+  margin-bottom:14px;
+}
+.ask{font-family:var(--sans);font-weight:700;font-size:1.15rem;margin-bottom:18px;line-height:1.5}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:stretch}
+.row.secondary-row{margin-top:10px}
+.row.secondary-row .btn.ghost{padding:10px 20px;font-size:0.86rem;box-shadow:none}
+.file-preview{
+  margin-top:14px;border:1px solid var(--rule);border-radius:var(--radius);
+  overflow:hidden;background:var(--card);
+}
+.file-preview-head{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:10px 14px;background:var(--surface-soft);font-size:0.82rem;color:var(--ink-2);font-weight:700;
+}
+.file-preview-head .icon-circle{width:26px;height:26px;font-size:0.72rem;border:none;background:transparent;flex-shrink:0}
+.file-preview iframe,.file-preview img{width:100%;height:360px;border:0;display:block;object-fit:contain;background:#fff}
+input[type="date"]{
+  font-family:inherit;font-size:1rem;padding:13px 16px;
+  border:1px solid var(--ink-3);border-radius:var(--radius);
+  background:#fff;color:var(--ink);flex:1 1 220px;min-width:190px;
+}
+input[type="date"]:focus-visible{outline:3px solid var(--primary);outline-offset:1px}
+.btn{
+  font-family:inherit;font-size:0.95rem;font-weight:700;
+  padding:14px 30px;border-radius:var(--radius-pill);cursor:pointer;
+  border:1px solid var(--primary);background:var(--primary);color:#fff;
+  box-shadow:0 1px 3px rgba(0,100,224,.35);
+  transition:background-color .15s ease-out,border-color .15s ease-out,box-shadow .15s ease-out;
+}
+.btn:hover{background:var(--primary-deep);border-color:var(--primary-deep)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--ink);box-shadow:none}
+.btn.ghost:hover{background:rgba(21,23,28,.05)}
+.btn:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+.hint{font-size:0.78rem;color:var(--ink-3);margin-top:12px}
+
+/* ---------- 세대 레일 (시그니처) ---------- */
+.rail-sec{margin-top:var(--gap);display:none}
+.rail-sec.on{display:block}
+.rail{
+  position:relative;display:grid;grid-template-columns:repeat(5,1fr);
+  margin:30px 0 8px;
+}
+.rail::before{
+  content:"";position:absolute;left:10%;right:10%;top:11px;
+  height:1px;background:var(--rule);
+}
+.node{position:relative;text-align:center;padding-top:0}
+.dot{
+  width:23px;height:23px;border-radius:50%;margin:0 auto 10px;
+  background:var(--paper);border:1px solid var(--rule);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.7rem;font-weight:700;color:var(--ink-3);position:relative;z-index:2;
+}
+.node.mine .dot{background:var(--primary);border-color:var(--primary);color:#fff;transform:scale(1.28)}
+.node.newest .dot{border:1px solid var(--ink);color:var(--ink);font-weight:900}
+.node small{display:block;font-size:0.68rem;color:var(--ink-3);line-height:1.4}
+.node.mine small{color:var(--primary);font-weight:700}
+.node-range{display:block;font-size:0.6rem;color:var(--ink-3);margin-top:2px;letter-spacing:0.02em}
+.node.mine .node-range{color:var(--primary)}
+.tagline{
+  display:inline-block;margin-top:6px;font-size:0.62rem;font-weight:700;
+  letter-spacing:0.08em;color:var(--primary);
+}
+
+/* ---------- 결과 ---------- */
+.verdict{
+  border:1px solid var(--ink);border-radius:var(--radius);
+  background:var(--card);padding:26px 24px;
+  box-shadow:0 1px 4px rgba(20,22,26,0.06);
+}
+.verdict .gen{
+  font-family:var(--sans);font-weight:900;font-size:clamp(1.5rem,4.6vw,2.1rem);
+  line-height:1.32;margin-bottom:12px;
+}
+.verdict .gen strong{color:var(--primary)}
+.verdict p{color:var(--ink-2);font-size:0.95rem}
+
+.notice{
+  margin-top:14px;border-left:3px solid var(--primary);
+  background:var(--surface-soft);padding:16px 18px;border-radius:0 var(--radius) var(--radius) 0;
+}
+.notice b{display:block;font-size:0.78rem;letter-spacing:0.1em;color:var(--primary);margin-bottom:6px}
+.notice p{font-size:0.92rem;color:var(--ink);line-height:1.65}
+
+/* ---------- 조항 ---------- */
+.sec-head{
+  display:flex;align-items:baseline;justify-content:space-between;
+  gap:12px;margin:var(--section-gap) 0 4px;
+  border-bottom:1px solid var(--ink);padding-bottom:10px;flex-wrap:wrap;
+}
+.sec-head h2{font-family:var(--sans);font-size:1.4rem;font-weight:800}
+.sec-head span{font-size:0.75rem;color:var(--ink-3)}
+
+.clause-group-label{
+  margin:22px 0 4px;font-size:0.76rem;font-weight:700;
+  letter-spacing:0.08em;color:var(--ink-3);
+}
+.clause-group-label:first-child{margin-top:0}
+body.slow .clause-group-label{display:none}
+
+.clause-summary{font-size:0.85rem;color:var(--ink-2);margin-top:8px}
+.clause-empty{
+  margin-top:14px;padding:22px;text-align:center;
+  background:var(--surface-soft);border-radius:var(--radius);
+  color:var(--ink-3);font-size:0.9rem;
+}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.chip{
+  font-family:inherit;font-size:0.8rem;font-weight:700;
+  padding:8px 16px;border:1px solid var(--rule);border-radius:var(--radius-pill);
+  background:var(--card);color:var(--ink-2);cursor:pointer;
+}
+.chip:hover{border-color:var(--ink)}
+.chip.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chip:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+body.slow .filter-row{display:none}
+
+.clause{
+  background:var(--card);border:1px solid var(--rule);
+  border-radius:var(--radius);padding:22px 22px 18px;margin-top:14px;
+}
+.clause.bad{border-left:4px solid var(--danger)}
+.clause.warn{border-left:4px solid var(--flag)}
+.clause.good{border-left:4px solid var(--success)}
+
+.tag{
+  display:inline-block;font-size:0.66rem;font-weight:700;letter-spacing:0.1em;
+  padding:4px 10px;border-radius:var(--radius-pill);margin-bottom:12px;
+}
+.bad .tag{background:var(--danger-soft);color:var(--danger)}
+.warn .tag{background:var(--flag-soft);color:var(--flag)}
+.good .tag{background:var(--success-soft);color:var(--success)}
+
+.case-flag{
+  display:inline-block;margin-left:8px;margin-bottom:12px;
+  font-size:0.66rem;font-weight:700;letter-spacing:0.05em;
+  padding:4px 10px;border-radius:var(--radius-pill);
+  background:var(--surface-soft);color:var(--ink-2);
+  vertical-align:middle;
+}
+
+.clause h3{font-size:1.05rem;font-weight:700;margin-bottom:10px;line-height:1.5}
+.plain{color:var(--ink);line-height:1.8;font-size:0.98rem}
+.money{
+  margin-top:14px;background:var(--surface-soft);border:none;
+  padding:13px 15px;border-radius:var(--radius);font-size:0.9rem;
+}
+.money b{color:var(--danger);font-weight:700}
+
+.tools{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+.tool{
+  font-family:inherit;font-size:0.78rem;font-weight:700;
+  padding:7px 14px;border:1px solid var(--rule);background:transparent;
+  color:var(--ink-2);border-radius:var(--radius-pill);cursor:pointer;
+}
+.tool:hover{border-color:var(--ink);color:var(--ink)}
+.tool:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+body.slow .tool{font-size:0.86rem;padding:12px 18px}
+
+.source{
+  display:none;margin-top:14px;padding:16px 18px;
+  background:var(--surface-soft);border:1px solid var(--rule);border-radius:var(--radius);
+}
+.source.on{display:block}
+.source small{
+  display:block;font-size:0.68rem;letter-spacing:0.1em;
+  color:var(--ink-3);margin-bottom:8px;
+}
+.source p{font-family:var(--sans);font-size:0.92rem;line-height:1.8;color:var(--ink-2)}
+
+/* 시니어: 한 번에 하나씩 */
+.pager{display:none;margin-top:22px}
+body.slow .pager{display:block}
+.progress-bar{height:6px;border-radius:var(--radius-pill);background:var(--rule-2);overflow:hidden;margin-bottom:14px}
+.progress-fill{height:100%;background:var(--primary);border-radius:var(--radius-pill);transition:width .25s ease}
+.pager-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.pager .count{font-size:0.9rem;color:var(--ink-3);font-weight:700}
+.btn-nav{
+  font-family:inherit;font-weight:700;font-size:0.95rem;
+  padding:14px 26px;border-radius:var(--radius-pill);cursor:pointer;
+  border:1px solid var(--primary);background:var(--primary);color:#fff;
+}
+.btn-nav.ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn-nav:disabled{opacity:0.35;cursor:default}
+.btn-nav:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+body.slow .clause{display:none}
+body.slow .clause.current{display:block}
+body.slow .tool[data-act="tts"]{background:var(--primary);color:#fff;border-color:var(--primary)}
+body.slow .tool[data-act="tts"]:hover{background:var(--primary-deep)}
+
+/* ---------- 비교표 ---------- */
+.table-scroll{overflow-x:auto;margin-top:14px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:0.9rem}
+th,td{padding:13px 14px;text-align:left;border-bottom:1px solid var(--rule-2)}
+th{font-size:0.72rem;letter-spacing:0.08em;color:var(--ink-3);font-weight:700;background:var(--surface-soft)}
+tr:last-child td{border-bottom:0}
+td.mine-col{background:var(--primary-soft);font-weight:700}
+
+@media (max-width:640px){
+  .table-scroll{border:none;background:transparent;overflow-x:visible}
+  table{min-width:0;width:100%}
+  table tr:first-child{display:none}
+  tr{
+    display:block;background:var(--card);border:1px solid var(--rule);
+    border-radius:var(--radius);margin-bottom:10px;overflow:hidden;
+  }
+  tr:last-child{margin-bottom:0}
+  td{display:block;border-bottom:1px solid var(--rule-2)}
+  td:first-child{
+    font-weight:800;font-size:0.85rem;background:var(--surface-soft);
+    border-bottom:1px solid var(--rule-2);
+  }
+  td:not(:first-child){display:flex;justify-content:space-between;align-items:center;gap:12px}
+  td:not(:first-child):before{content:attr(data-label);font-weight:700;color:var(--ink-3);font-size:0.72rem}
+  td:last-child{border-bottom:0}
+}
+
+/* ---------- FAQ ---------- */
+.faq-sec{margin-top:var(--section-gap)}
+.faq{margin-top:14px}
+.faq-item{
+  background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);
+  margin-top:10px;overflow:hidden;
+}
+.faq-item:first-child{margin-top:0}
+.faq-q{
+  width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;
+  font-family:inherit;font-size:0.98rem;font-weight:700;color:var(--ink);
+  background:none;border:0;padding:18px 20px;cursor:pointer;text-align:left;
+}
+.faq-chevron{color:var(--ink-3);transition:transform .2s ease;font-size:1rem;flex-shrink:0}
+.faq-item.open .faq-chevron{transform:rotate(180deg);color:var(--primary)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease}
+.faq-item.open .faq-a{max-height:320px}
+.faq-a p{padding:0 20px 18px;color:var(--ink-2);font-size:0.92rem;line-height:1.75}
+.faq-q:focus-visible{outline:3px solid var(--primary);outline-offset:-3px}
+
+.save-cta{margin-top:24px;text-align:center}
+
+/* ---------- 사이트 푸터 ---------- */
+.site-footer{margin-top:var(--section-gap);border-top:1px solid var(--rule);padding:28px 0 110px}
+.footer-inner{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px}
+.footer-brand b{font-weight:800;font-size:1rem}
+.footer-brand span{display:block;font-size:0.76rem;color:var(--ink-3);margin-top:2px}
+.footer-links{display:flex;gap:16px;font-size:0.82rem}
+.footer-links a{color:var(--ink-2);text-decoration:none}
+.footer-links a:hover{color:var(--ink)}
+.footer-icons{display:flex;gap:8px}
+.icon-circle{
+  width:34px;height:34px;border-radius:50%;border:1px solid var(--rule);
+  display:flex;align-items:center;justify-content:center;color:var(--ink-2);
+  text-decoration:none;font-size:0.95rem;
+}
+.icon-circle:hover{border-color:var(--ink);color:var(--ink)}
+
+/* ---------- 가입 목업 ---------- */
+.signup-benefits{margin:4px 0 18px;padding-left:18px;color:var(--ink-2);font-size:0.88rem;line-height:1.85}
+.signup-input{
+  width:100%;padding:12px 14px;border:1px solid var(--rule);border-radius:var(--radius);
+  margin-bottom:12px;font-family:inherit;font-size:0.95rem;
+}
+.signup-note{margin-top:14px;font-size:0.72rem;color:var(--ink-3);line-height:1.6}
+
+/* ---------- 푸터 ---------- */
+.disclaimer{
+  margin-top:calc(var(--gap) * 2);padding:20px 22px;
+  border:1px solid var(--rule);border-radius:var(--radius);
+  background:transparent;font-size:0.8rem;color:var(--ink-3);line-height:1.75;
+}
+.disclaimer b{color:var(--danger)}
+
+.demo-flag{
+  position:fixed;left:0;right:0;bottom:0;z-index:60;
+  background:var(--ink);color:var(--paper);
+  font-size:0.74rem;padding:10px 20px;text-align:center;letter-spacing:0.02em;
+}
+
+/* ---------- 알림 모달 ---------- */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(10,12,20,.5);
+  display:none;align-items:center;justify-content:center;
+  padding:20px;z-index:100;
+}
+.modal-overlay.on{display:flex}
+.modal-box{
+  background:#fff;border-radius:20px;max-width:420px;width:100%;
+  padding:32px 28px 28px;position:relative;
+  box-shadow:0 20px 60px rgba(10,12,20,.28);
+  animation:modalIn .25s ease both;
+}
+@keyframes modalIn{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+.modal-close{
+  position:absolute;top:14px;right:14px;background:none;border:0;
+  font-size:1rem;color:var(--ink-3);cursor:pointer;width:32px;height:32px;
+  border-radius:50%;
+}
+.modal-close:hover{background:var(--surface-soft);color:var(--ink)}
+.modal-close:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+.modal-alert-icon{
+  width:44px;height:44px;border-radius:50%;background:var(--danger-soft);
+  color:var(--danger);font-weight:900;font-size:1.3rem;
+  display:flex;align-items:center;justify-content:center;margin-bottom:16px;
+}
+.modal-eyebrow{font-size:0.78rem;font-weight:700;letter-spacing:0.08em;color:var(--danger);margin-bottom:8px}
+.modal-box h3{font-size:1.2rem;font-weight:800;line-height:1.4;margin-bottom:10px}
+.modal-box p:not(.modal-eyebrow){color:var(--ink-2);font-size:0.92rem;line-height:1.7;margin-bottom:22px}
+.modal-box .btn{width:100%;text-align:center;justify-content:center}
+
+@keyframes flashHighlight{0%{box-shadow:0 0 0 4px var(--danger-soft)}100%{box-shadow:none}}
+.clause.flash{animation:flashHighlight 1.6s ease}
+
+@media (prefers-reduced-motion:no-preference){
+  .clause,.verdict{animation:rise .4s ease both}
+  @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+}
+@media (max-width:560px){
+  .stats{grid-template-columns:1fr}
+  .node small{font-size:0.6rem}
+  .node-range{font-size:0.55rem}
+}
+</style>
+</head>
+<body class="quick">
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand"><b>다시읽기</b><span>실손보험 약관 해독기</span></div>
+    <div class="topbar-right">
+      <div class="lang-toggle" role="group" aria-label="언어 선택">
+        <button id="langKo" aria-pressed="true">한국어</button>
+        <button id="langEn" aria-pressed="false" disabled title="영어 버전은 준비 중입니다">EN</button>
+      </div>
+      <div class="modes" role="group" aria-label="읽기 방식">
+        <button id="mQuick" aria-pressed="true">빠르게 보기</button>
+        <button id="mSlow" aria-pressed="false">천천히 보기</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow">가입 전 비교가 아니라, 가입 후 해독</div>
+    <h1>도장은 이미 찍었습니다.<br>이제 <em>뭐라고 쓰여 있는지</em> 알아야 합니다.</h1>
+    <p>가입일 하나만 넣으면 내 실손보험이 몇 세대인지, 어떤 조항이 나에게 불리한지, 새로 나온 5세대와 무엇이 다른지 알려드립니다.</p>
+
+    <div class="stats">
+      <div class="stat"><b>4,000만 명</b><small>실손보험 가입자 수 (2024년 말 기준, 금융위원회)</small></div>
+      <div class="stat"><b>65%</b><small>한 번도 보험금을 받은 적 없는 가입자 비율 (금융위원회, 2025)</small></div>
+      <div class="stat"><b>65.7점</b><small>성인 평균 금융이해력 점수 — 나이가 아니라 이해도 격차의 문제입니다 (한국은행·금감원, 2024)</small></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-inner">
+      <div class="step-badge">1</div>
+      <p class="ask">실손보험에 언제 가입하셨나요?</p>
+      <div class="row">
+        <input type="date" id="joinDate" value="2013-06-15" aria-label="가입일">
+        <button class="btn" id="go">내 약관 찾기</button>
+      </div>
+      <div class="row secondary-row">
+        <label class="btn ghost" for="policyFile">📎 증권 파일에서 확인하기</label>
+        <input type="file" id="policyFile" accept="application/pdf,image/*" style="display:none">
+        <button class="btn ghost" id="demo">예시로 먼저 둘러보기</button>
+      </div>
+      <div class="file-preview" id="filePreview" hidden></div>
+      <p class="hint">가입일은 보험증권이나 보험사 앱의 계약 상세에서 확인할 수 있습니다. 정확한 날짜가 기억나지 않으면 증권 파일을 올려 화면에 띄워두고 찾아보세요 — 파일은 이 브라우저를 벗어나지 않고, 내용을 읽거나 서버로 보내지 않습니다.</p>
+    </div>
+  </section>
+
+  <section class="faq-sec">
+    <div class="sec-head">
+      <h2>자주 묻는 질문</h2>
+    </div>
+    <div class="faq" id="faq"></div>
+  </section>
+
+  <section class="rail-sec" id="result">
+
+    <div class="rail" id="rail"></div>
+
+    <div class="verdict">
+      <p class="gen" id="genLine"></p>
+      <p id="genDesc"></p>
+      <div class="notice">
+        <b>약관 최신화 안내</b>
+        <p id="updateMsg"></p>
+      </div>
+    </div>
+
+    <div class="sec-head">
+      <h2>내 약관에서 확인할 조항</h2>
+      <span id="clauseCount"></span>
+    </div>
+    <p class="clause-summary" id="clauseSummary"></p>
+    <div class="filter-row" id="filterRow" role="group" aria-label="위험도 필터">
+      <button class="chip active" data-filter="all">전체</button>
+      <button class="chip" data-filter="bad">불리한 조항</button>
+      <button class="chip" data-filter="warn">확인 필요</button>
+      <button class="chip" data-filter="good">유리한 조항</button>
+    </div>
+    <div id="clauses"></div>
+
+    <div class="pager">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="pager-row">
+        <button class="btn-nav ghost" id="prev">← 이전</button>
+        <span class="count" id="pageCount"></span>
+        <button class="btn-nav" id="next">다음 →</button>
+      </div>
+    </div>
+
+    <div class="sec-head">
+      <h2>내 세대 vs 5세대</h2>
+      <span>2026년 5월 6일 출시</span>
+    </div>
+    <div class="table-scroll">
+      <table id="cmp"></table>
+    </div>
+
+    <div class="save-cta">
+      <button class="btn ghost" id="saveAlertBtn">이 결과 저장하고, 다음 개편 때 알림 받기</button>
+    </div>
+
+    <div class="disclaimer">
+      <b>이 화면은 학부 프로젝트 시연용 프로토타입입니다.</b> "실제 분쟁조정 사례" 배지가 붙은 조항은 금융감독원 분쟁조정위원회·대법원 판결·한국소비자원 발표 등 공개된 실제 사례를 요약한 것이며, 그 외 조항은 실제 보험사 약관 원문이 아니라 제도 공개 정보를 바탕으로 재구성한 예시 데이터입니다. 어느 쪽도 법적 효력은 없습니다.
+      실제 보장 여부는 가입하신 보험사의 약관 원문과 보험증권을 반드시 확인하시고, 판단이 어려우면 금융감독원 콜센터(1332)에 문의하세요.
+      금액 계산은 이해를 돕기 위한 단순 예시로 실제 지급액과 다릅니다.
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand"><b>다시읽기</b><span>실손보험 약관 해독기 · 학부 프로젝트 프로토타입</span></div>
+    <div class="footer-links">
+      <a href="#">이용안내</a><a href="#">데이터 출처</a><a href="#">문의</a>
+    </div>
+    <div class="footer-icons">
+      <a href="#" aria-label="이메일 문의" class="icon-circle" onclick="return false">✉</a>
+      <a href="#" aria-label="공유" class="icon-circle" onclick="return false">↗</a>
+    </div>
+  </div>
+</footer>
+
+<div class="demo-flag">데모 데이터로 작동 중 · 실제 약관 연동 전 단계</div>
+
+<div class="modal-overlay" id="signupOverlay">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="signupTitle">
+    <button class="modal-close" id="signupClose" aria-label="닫기">✕</button>
+    <div class="modal-alert-icon" style="background:var(--primary-soft);color:var(--primary)">★</div>
+    <p class="modal-eyebrow" style="color:var(--primary)">결과 저장 · 개편 알림</p>
+    <h3 id="signupTitle">계정을 만들면 이런 게 됩니다</h3>
+    <ul class="signup-benefits">
+      <li>오늘 확인한 조항을 저장해두고 나중에 다시 보기</li>
+      <li>내 세대 약관이 개정되면 알림 받기</li>
+      <li>가족 계정과 결과 공유하기</li>
+    </ul>
+    <input type="email" class="signup-input" id="signupEmail" placeholder="이메일 주소">
+    <button class="btn" id="signupSubmit">가입하기</button>
+    <p class="signup-note">* 사업 확장 방향을 보여주기 위한 목업 화면입니다. 실제로 가입·저장되지 않습니다.</p>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" aria-label="닫기">✕</button>
+    <div class="modal-alert-icon">!</div>
+    <p class="modal-eyebrow">잠깐, 확인해보셨나요?</p>
+    <h3 id="modalTitle"></h3>
+    <p id="modalBody"></p>
+    <button class="btn" id="modalCta">바로 확인하기</button>
+  </div>
+</div>
+
+<script>
+/* ============ 세대 판별 ============ */
+const GENS = [
+  {g:1, label:"1세대", nick:"구실손",   from:"1999-01-01", to:"2009-09-30"},
+  {g:2, label:"2세대", nick:"표준화",   from:"2009-10-01", to:"2017-03-31"},
+  {g:3, label:"3세대", nick:"착한실손", from:"2017-04-01", to:"2021-06-30"},
+  {g:4, label:"4세대", nick:"할인할증", from:"2021-07-01", to:"2026-05-05"},
+  {g:5, label:"5세대", nick:"현행",     from:"2026-05-06", to:"2099-12-31"}
+];
+const NEWEST = 5;
+
+function findGen(dateStr){
+  const d = dateStr;
+  for(const g of GENS){ if(d >= g.from && d <= g.to) return g; }
+  return d < GENS[0].from ? GENS[0] : GENS[GENS.length-1];
+}
+
+/* ============ 조항 데이터 (제도 기준 재구성 예시) ============ */
+const CLAUSES = {
+  1:[
+    {t:"good", tag:"유리한 조항", h:"자기부담금이 거의 없습니다",
+     plain:"병원비의 100% 또는 90%까지 돌려받는 구조입니다. 지금 판매되는 어떤 실손보다도 보장이 넓습니다. 갈아타라는 권유를 받아도 서두르지 마세요.",
+     money:"도수치료 10만 원을 받았다면 → 대략 <b>9만~10만 원</b>을 돌려받는 구조입니다.",
+     src:"회사는 피보험자가 상해 또는 질병으로 인하여 병원에 입원하여 치료를 받은 경우 본인이 실제로 부담한 의료비 전액을 보상하여 드립니다."},
+    {t:"bad", tag:"불리한 조항", h:"보험료가 갱신 때마다 크게 오릅니다",
+     plain:"보장이 넓은 대신 손해율이 높아 갱신 시점마다 보험료 인상 폭이 가장 큽니다. 나이가 들수록 부담이 빠르게 커지는 구조입니다.",
+     money:"보장은 최고지만 <b>보험료 인상률도 최고</b>입니다. 유지 여부는 보험료를 감당할 수 있는지로 판단하세요.",
+     src:"이 계약의 보험료는 갱신시점의 위험률 및 연령에 따라 재산출되며, 갱신 후 보험료는 인상될 수 있습니다."},
+    {t:"warn", tag:"확인 필요", h:"건강보험공단이 대신 내준 돈은 실손보험 대상이 아닙니다", real:true,
+     plain:"입원비를 냈다가 국민건강보험의 본인부담상한제로 초과분을 나중에 돌려받았다면, 실손보험금은 그 환급분을 뺀 나머지에 대해서만 계산됩니다. 약관에 이 내용이 따로 적혀 있지 않아도 마찬가지라는 게 실제 판례로 확정됐습니다.",
+     money:"공단이 대신 부담한 돈은 애초에 '내가 실제로 낸 돈'이 아니라서 실손보험금 계산에서 <b>제외</b>됩니다.",
+     src:"대법원 2024.1.25. 선고 2023다283913 판결 — 본인부담상한액 초과환급금은 실손의료보험이 보상하는 '급여 본인부담금'에 해당하지 않는다고 판시(약관에 명시 규정이 없어도 동일하게 적용)."}
+  ],
+  2:[
+    {t:"warn", tag:"확인 필요", h:"병원비의 10~20%는 본인이 냅니다",
+     plain:"가입 시점에 따라 자기부담률이 0%, 10%, 20% 중 하나로 정해져 있습니다. 증권에 적힌 숫자를 반드시 확인하세요. 같은 2세대라도 사람마다 다릅니다.",
+     money:"자기부담 20%라면 도수치료 10만 원 중 <b>2만 원</b>은 본인 몫입니다.",
+     src:"회사는 피보험자가 부담하는 의료비 중 본인부담금의 100분의 80(또는 100분의 90)에 해당하는 금액을 보상하여 드립니다."},
+    {t:"bad", tag:"불리한 조항", h:"재가입 주기가 15년입니다",
+     plain:"15년이 지나면 그 시점의 새로운 상품 기준으로 다시 가입해야 합니다. 지금 보장이 그대로 평생 가는 것이 아닙니다.",
+     money:"재가입 시점에 보장 조건이 <b>당시 판매 상품 기준</b>으로 바뀝니다.",
+     src:"이 특약의 보장기간이 만료되는 경우 계약자는 재가입할 수 있으며, 재가입 시점에 판매 중인 실손의료보험 상품의 보장내용이 적용됩니다."},
+    {t:"warn", tag:"놓치기 쉬움", h:"통원 치료는 일정 금액을 빼고 줍니다",
+     plain:"외래 진료는 병원 종류에 따라 1~2만 원을 뺀 나머지만 지급됩니다. 소액 진료는 청구해도 받을 게 거의 없어 포기하는 경우가 많습니다.",
+     money:"의원 외래 진료비가 1만 5천 원이면 공제 후 <b>거의 0원</b>입니다.",
+     src:"통원의 경우 외래제비용 및 처방조제비에서 병원 규모별로 정한 공제금액을 차감한 금액을 보상하여 드립니다."}
+  ],
+  3:[
+    {t:"warn", tag:"확인 필요", h:"비급여 3종은 별도 특약입니다",
+     plain:"도수치료·체외충격파·증식치료, 비급여 주사, 비급여 MRI는 기본 계약이 아니라 특약으로 분리되어 있습니다. 특약에 가입하지 않았다면 이 항목들은 아예 보장되지 않습니다.",
+     money:"특약 미가입 상태에서 도수치료를 받으면 <b>전액 본인 부담</b>입니다.",
+     src:"비급여 도수치료·체외충격파치료·증식치료 실손의료비 특별약관에 가입한 경우에 한하여 해당 의료비를 보상하여 드립니다."},
+    {t:"warn", tag:"놓치기 쉬움", h:"급여 20%, 비급여 30%가 본인 부담입니다",
+     plain:"건강보험이 적용되는 진료는 20%, 적용되지 않는 진료는 30%를 본인이 냅니다. 비급여일수록 부담이 커지는 구조입니다.",
+     money:"비급여 도수치료 10만 원 → 자기부담 3만 원, 지급 <b>7만 원</b>.",
+     src:"급여 의료비는 본인부담금의 100분의 80, 비급여 의료비는 100분의 70에 해당하는 금액을 보상하여 드립니다."},
+    {t:"warn", tag:"확인 필요", h:"비급여 3종 특약도 연간 한도가 정해져 있습니다",
+     plain:"도수치료·체외충격파·증식치료는 연 350만 원(50회), 비급여 주사는 연 250만 원(50회), 비급여 MRI는 연 300만 원까지만 보장됩니다. 특약에 가입했어도 이 한도를 넘는 치료비는 전액 본인 부담입니다.",
+     money:"도수치료를 자주 받는다면 <b>연 350만 원·50회</b> 한도를 넘기지 않는지 확인하세요.",
+     src:"비급여 도수치료·체외충격파치료·증식치료 실손의료비 특별약관의 보상한도는 연간 350만원 및 50회, 비급여 주사료 실손의료비 특별약관은 연간 250만원 및 50회, 비급여 자기공명영상진단 실손의료비 특별약관은 연간 300만원을 한도로 합니다."}
+  ],
+  4:[
+    {t:"bad", tag:"불리한 조항", h:"치료비를 몰아서 청구하면 오히려 손해일 수 있습니다", real:true,
+     plain:"실제 분쟁조정 사례에서, 2년 치 병원비를 모아뒀다가 한 해에 한꺼번에 청구했더니 그 해 수령액이 할증 기준(연 100만 원)을 넘겨 다음 해 보험료가 2배로 오른 경우가 있습니다. 할증 기준은 '치료받은 날'이 아니라 '보험금을 받은 날' 기준입니다.",
+     money:"비급여 보험금 129만 원을 한 해에 몰아서 받은 가입자는 다음 해 보험료가 <b>2배</b>로 올랐습니다.",
+     src:"금융감독원 분쟁조정사례(2025년 상반기 공개) · 보험연구원 「보험법 리뷰: 2025년 상반기 보험 분쟁조정 동향」(2025.6.16) — 비급여 보험료 할증은 진료일이 아닌 보험금 지급일 기준임을 확인."},
+    {t:"warn", tag:"확인 필요", h:"재가입 주기가 5년으로 짧습니다",
+     plain:"5년마다 그 시점의 상품 기준으로 다시 가입하게 됩니다. 이전 세대보다 보장 조건이 바뀔 가능성이 훨씬 잦습니다.",
+     money:"5년 뒤 보장 내용이 <b>당시 기준으로 변경</b>될 수 있습니다.",
+     src:"이 특약의 보장기간은 5년이며, 보장기간 만료 시 계약자는 재가입할 수 있습니다."},
+    {t:"warn", tag:"확인 필요", h:"할인·할증은 5단계로 나뉩니다",
+     plain:"직전 1년간 받은 비급여 보험금이 없으면 할인, 100만 원 이상이면 등급별로 할증됩니다. 100만~150만 원 미만은 100% 할증, 150만~300만 원 미만은 200% 할증, 300만 원 이상은 300% 할증입니다.",
+     money:"비급여를 전혀 안 쓰면 다음 해 보험료가 약 <b>5% 할인</b>됩니다.",
+     src:"직전 1년간 비급여 보험금 지급액이 없는 경우 보험료를 할인하고, 100만원 이상 150만원 미만은 100%, 150만원 이상 300만원 미만은 200%, 300만원 이상은 300%를 할증하여 적용합니다."}
+  ],
+  5:[
+    {t:"bad", tag:"불리한 조항", h:"비중증 비급여는 절반만 돌려받습니다",
+     plain:"도수치료나 영양주사 같은 비중증 비급여는 자기부담률이 50%입니다. 연간 보장 한도도 1,000만 원으로 줄었습니다.",
+     money:"도수치료 10만 원 → 자기부담 5만 원, 지급 <b>5만 원</b>.",
+     src:"비중증 비급여 의료비는 본인이 실제 부담한 금액의 100분의 50에 해당하는 금액을 보상하며, 연간 보상한도는 1천만 원으로 합니다."},
+    {t:"good", tag:"유리한 조항", h:"임신·출산 급여 의료비가 새로 들어왔습니다",
+     plain:"기존 실손에서 빠져 있던 임신·출산 관련 급여 의료비가 보장됩니다. 다만 분만예정일로부터 280일 이전에 가입한 경우에만 해당됩니다.",
+     money:"가입 시점 조건이 있으니 <b>임신 전 가입 여부</b>를 확인하세요.",
+     src:"임신·출산과 관련한 급여 의료비는 분만예정일로부터 280일 이전에 이 계약에 가입한 경우에 한하여 보상하여 드립니다."},
+    {t:"warn", tag:"놓치기 쉬움", h:"외래 진료는 병원 규모에 따라 지급액이 달라집니다",
+     plain:"건강보험 본인부담률과 연동되어, 큰 병원에 갈수록 돌려받는 비율이 낮아집니다. 가벼운 증상은 동네 의원이 유리합니다.",
+     money:"감기로 상급종합병원에 가면 <b>40%만</b> 보장됩니다.",
+     src:"외래 급여 의료비의 보상 비율은 국민건강보험법령에서 정한 요양기관 종별 본인부담률에 연동하여 적용합니다."}
+  ]
+};
+
+/* 모든 세대 공통 조항 */
+const COMMON = [
+  {t:"warn", tag:"모든 세대 공통", h:"미용 목적과 치과·한방 비급여는 보장되지 않습니다",
+   plain:"성형, 시력교정, 치과 비급여, 한방 비급여, 예방접종, 건강검진은 보상 대상에서 제외됩니다. 다만 치료 목적임이 확인되면 예외가 인정되는 경우가 있습니다.",
+   money:"치료 목적 여부를 다투는 것이 <b>분쟁의 절반</b>을 차지합니다. 진단서 문구가 중요합니다.",
+   src:"회사는 다음의 사유로 인한 손해는 보상하여 드리지 아니합니다. 외모개선 목적의 치료, 치과치료·한방치료에서 발생한 비급여 의료비, 예방접종 및 건강검진 비용."},
+  {t:"good", tag:"모든 세대 공통", h:"3년 지난 병원비도 아직 청구할 수 있습니다",
+   plain:"보험금 청구권은 3년 안에 행사할 수 있습니다. 예전에 귀찮아서 넘긴 영수증이 있다면 지금이라도 확인해 보세요. 65%가 한 번도 청구하지 않았다는 통계는 여기서 나옵니다.",
+   money:"3년 치 영수증을 모으면 <b>수십만 원</b>이 되는 경우가 흔합니다.",
+   src:"보험금청구권은 이를 행사할 수 있는 때로부터 3년간 행사하지 아니하면 소멸시효가 완성됩니다."},
+  {t:"warn", tag:"모든 세대 공통", h:"도수치료도 횟수 제한 없이 다 보상되는 건 아닙니다", real:true,
+   plain:"실제 분쟁조정 사례에서, 같은 부위로 도수치료를 19회 받아 보험금을 받은 뒤 22회를 추가로 청구했다가 거절된 경우가 있습니다. 증상이 좋아지고 있다는 의학적 근거가 없으면 보험사는 추가 치료를 예방·미용 목적으로 보고 보상하지 않을 수 있습니다. 한국소비자원에 따르면 최근 5년간 도수치료 관련 보험금 거절 4,560건 중 67.4%가 '의사 진단·치료 불인정' 사유였습니다.",
+   money:"19회(약 99만 7천 원)는 보상, 추가 22회(약 245만 6천 원)는 <b>전액 거절</b>된 사례가 있습니다.",
+   src:"금융감독원 금융분쟁조정위원회 결정(2016.6.9 공표) · 한국소비자원 소비자24 분쟁조정 사례(사례번호 12927) · 한국소비자원 2026.6.8 소비자 주의보(최근 5년 거절 사유 통계)."},
+  {t:"warn", tag:"모든 세대 공통", h:"입원이냐 통원이냐에 따라 실제로 받는 돈이 달라집니다", real:true,
+   plain:"실제 분쟁조정 사례에서, 어깨 질환으로 입원해 시술을 받고 '입원의료비'로 청구했는데 보험사가 '통원'으로 재분류해 더 낮은 한도로 지급한 경우가 있습니다. 입원은 출혈·감염 같은 합병증이나 경과관찰이 꼭 필요하다고 객관적으로 확인될 때만 인정됩니다.",
+   money:"같은 시술이라도 통원으로 분류되면 <b>공제금액과 보장한도가 더 낮은 구간</b>이 적용됩니다.",
+   src:"금융감독원 분쟁조정사례(2025년 상반기 공개) · 보험연구원 「보험법 리뷰: 2025년 상반기 보험 분쟁조정 동향」(2025.6.16) — 건강보험심사평가원 공개심의사례(제2023-233호) 인용."}
+];
+
+/* 비교표 */
+const CMP = {
+  1:["자기부담 거의 없음","제한 거의 없음","3~5년","보장 최고 / 보험료 인상 최대"],
+  2:["급여·비급여 10~20%","통합 보장","1년 (재가입 15년)","증권마다 자기부담률 다름"],
+  3:["급여 20% / 비급여 30%","비급여 3종 특약 분리","1년 (재가입 15년)","특약 가입 여부 확인 필수"],
+  4:["급여 20% / 비급여 30%","비급여 이용량 할인·할증","1년 (재가입 5년)","많이 쓰면 보험료 할증"],
+  5:["급여 20% / 비중증 비급여 50%","중증 중심 재편, 한도 1천만 원","1년 (재가입 5년)","보험료 최저 / 비급여 보장 최소"]
+};
+
+/* ============ FAQ (정적 콘텐츠) ============ */
+const FAQ = [
+  {q:"세대는 어떻게 정해지나요?",
+   a:"가입일(YYYY-MM-DD)을 2009-09-30, 2017-03-31, 2021-06-30, 2026-05-05 네 개의 기준일과 비교해서 1~5세대로 자동 분류합니다. 갱신일이 아니라 최초 가입일 기준입니다."},
+  {q:"청구했는데 왜 금액을 다 못 받았나요?",
+   a:"실손보험은 대부분 '자기부담률'과 '공제금액'이 있어서 병원비 전액이 아니라 그중 일부만 보장합니다. 대체로 세대가 최신일수록 본인이 내는 비율이 높아지는 경향이 있습니다."},
+  {q:"5세대로 갈아타면 무조건 유리한가요?",
+   a:"아닙니다. 오래된 세대일수록 자기부담이 적어 보장이 넓은 대신 보험료가 비싼 경우가 많습니다. 이 서비스는 전환을 권하지 않으며, 본인 상황을 '내 세대 vs 5세대' 비교표로 직접 확인하시길 권장합니다."},
+  {q:"여기 나온 조항은 제 약관이랑 똑같나요?",
+   a:"아닙니다. '실제 분쟁조정 사례' 배지가 없는 조항은 제도 공개 정보를 바탕으로 재구성한 예시이고, 배지가 있는 조항은 실제 공개된 분쟁 사례를 요약한 것입니다. 두 경우 모두 회원님의 약관 원문과는 다를 수 있습니다."},
+  {q:"내 약관 원문은 어디서 볼 수 있나요?",
+   a:"가입한 보험사 앱의 '계약 상세'나 보험증권에서 확인할 수 있습니다. 판단이 어려우면 금융감독원 콜센터(1332)로 문의하세요."}
+];
+document.getElementById('faq').innerHTML = FAQ.map((f,i)=>`
+  <div class="faq-item" data-i="${i}">
+    <button class="faq-q" data-i="${i}" aria-expanded="false">
+      <span>${f.q}</span><span class="faq-chevron">⌄</span>
+    </button>
+    <div class="faq-a" id="faq-a-${i}"><p>${f.a}</p></div>
+  </div>`).join('');
+document.getElementById('faq').addEventListener('click', e=>{
+  const btn = e.target.closest('.faq-q');
+  if(!btn) return;
+  const item = btn.closest('.faq-item');
+  const open = item.classList.toggle('open');
+  btn.setAttribute('aria-expanded', String(open));
+});
+
+/* ============ 렌더 ============ */
+const SEVERITY = {bad:0, warn:1, good:2};
+const relevance = c => SEVERITY[c.t]*10 + (c.real ? 0 : 1);
+let state = {gen:null, idx:0, list:[], visible:[], mineCount:0, filter:'all'};
+
+function render(gen){
+  state.gen = gen;
+  state.idx = 0;
+  state.filter = 'all';
+  document.querySelectorAll('.chip').forEach(b=>b.classList.toggle('active', b.dataset.filter==='all'));
+  const mineClauses = (CLAUSES[gen.g] || []).slice().sort((a,b)=>relevance(a)-relevance(b)).map(c=>({...c, scope:'mine'}));
+  const commonClauses = COMMON.slice().sort((a,b)=>relevance(a)-relevance(b)).map(c=>({...c, scope:'common'}));
+  state.list = mineClauses.concat(commonClauses);
+  state.mineCount = mineClauses.length;
+
+  // 레일
+  document.getElementById('rail').innerHTML = GENS.map(g=>{
+    const cls = ['node', g.g===gen.g?'mine':'', g.g===NEWEST?'newest':''].join(' ');
+    const mark = g.g===gen.g ? '<span class="tagline">내 약관</span>' : (g.g===NEWEST?'<span class="tagline">현행</span>':'');
+    const range = `${g.from.slice(0,4)}~`;
+    return `<div class="${cls}"><div class="dot">${g.g}</div><small>${g.nick}</small><span class="node-range">${range}</span>${mark}</div>`;
+  }).join('');
+
+  // 판정
+  document.getElementById('genLine').innerHTML =
+    `회원님은 <strong>${gen.label} 실손(${gen.nick})</strong>입니다.`;
+  document.getElementById('genDesc').textContent =
+    `${gen.from.slice(0,4)}년 ${Number(gen.from.slice(5,7))}월부터 ${gen.g===5 ? '현재까지' : gen.to.slice(0,4)+'년 '+Number(gen.to.slice(5,7))+'월까지'} 판매된 상품군에 해당합니다.`;
+
+  document.getElementById('updateMsg').textContent = gen.g === NEWEST
+    ? "현재 판매 중인 최신 세대입니다. 제도 변경이 감지되면 이 자리에 알려드립니다."
+    : `현재 최신 제도는 5세대이며 2026년 5월 6일부터 전환할 수 있습니다. 회원님 약관과 5세대의 주요 차이를 아래 표에서 확인하세요. 전환이 항상 유리한 것은 아닙니다.`;
+
+  // 조항
+  renderClauses();
+
+  // 비교표
+  const rows = ["자기부담률","보장 구조","갱신 / 재가입","한 줄 요약"];
+  const mine = CMP[gen.g], five = CMP[5];
+  document.getElementById('cmp').innerHTML =
+    `<tr><th>항목</th><th>내 약관 (${gen.label})</th><th>5세대</th></tr>` +
+    rows.map((r,i)=>`<tr><td>${r}</td><td class="mine-col" data-label="내 약관 (${gen.label})">${mine[i]}</td><td data-label="5세대">${five[i]}</td></tr>`).join('');
+
+  document.getElementById('result').classList.add('on');
+  document.getElementById('result').scrollIntoView({behavior:'smooth', block:'start'});
+  maybeShowAlert();
+}
+
+/* 가장 위험도 높은 조항 알림 모달 */
+function maybeShowAlert(){
+  const topBad = state.list.find(c=>c.t==='bad');
+  if(!topBad){ return; }
+  document.getElementById('modalTitle').textContent = topBad.h;
+  document.getElementById('modalBody').textContent = topBad.plain;
+  document.getElementById('modalOverlay').classList.add('on');
+}
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('on');
+}
+
+/* 조항 리스트 렌더 (필터 반영) */
+function renderClauses(){
+  const gen = state.gen;
+  const filtered = state.filter === 'all' ? state.list : state.list.filter(c=>c.t===state.filter);
+  state.visible = filtered;
+  state.idx = 0;
+
+  const counts = state.list.reduce((acc,c)=>{ acc[c.t] = (acc[c.t]||0)+1; return acc; }, {});
+  document.getElementById('clauseSummary').textContent =
+    `불리한 조항 ${counts.bad||0}개 · 확인 필요 ${counts.warn||0}개 · 유리한 조항 ${counts.good||0}개`;
+
+  document.getElementById('clauseCount').textContent = state.filter === 'all'
+    ? `${gen.label} ${state.mineCount}개 · 공통 ${state.list.length - state.mineCount}개`
+    : `${filtered.length}개 표시 중 (전체 ${state.list.length}개)`;
+
+  if(filtered.length === 0){
+    document.getElementById('clauses').innerHTML = `<p class="clause-empty">이 조건에 해당하는 조항이 없습니다.</p>`;
+    updatePager();
+    return;
+  }
+
+  let mineShown = false, commonShown = false;
+  document.getElementById('clauses').innerHTML = filtered.map((c,i)=>{
+    let label = '';
+    if(c.scope==='mine' && !mineShown){ label = `<div class="clause-group-label">회원님의 ${gen.label} 조항</div>`; mineShown = true; }
+    if(c.scope==='common' && !commonShown){ label = `<div class="clause-group-label">모든 세대 공통 확인사항</div>`; commonShown = true; }
+    return `${label}
+    <article class="clause ${c.t} ${i===0?'current':''}" data-i="${i}">
+      <span class="tag">${c.tag}</span>
+      ${c.real ? '<span class="case-flag">실제 분쟁조정 사례</span>' : ''}
+      <h3>${c.h}</h3>
+      <p class="plain">${c.plain}</p>
+      <div class="money">${c.money}</div>
+      <div class="tools">
+        <button class="tool" data-act="src" data-i="${i}">${c.real ? '사례 출처 보기' : '원문 조항 보기'}</button>
+        <button class="tool" data-act="tts" data-i="${i}">소리로 듣기</button>
+        <button class="tool" data-act="share" data-i="${i}">가족에게 보낼 문장 복사</button>
+      </div>
+      <div class="source" id="src-${i}">
+        <small>${c.real ? '실제 사례 출처' : '약관 원문 (재구성 예시)'}</small>
+        <p>${c.src}</p>
+      </div>
+    </article>`;
+  }).join('');
+
+  updatePager();
+}
+
+/* 페이저 (천천히 보기 전용) */
+function updatePager(){
+  const cards = document.querySelectorAll('.clause');
+  cards.forEach((c,i)=>c.classList.toggle('current', i===state.idx));
+  const pc = document.getElementById('pageCount');
+  if(pc) pc.textContent = state.visible.length ? `${state.idx+1} / ${state.visible.length}` : '0 / 0';
+  const fill = document.getElementById('progressFill');
+  if(fill) fill.style.width = state.visible.length ? `${((state.idx+1)/state.visible.length)*100}%` : '0%';
+  const prev = document.getElementById('prev'), next = document.getElementById('next');
+  if(prev) prev.disabled = state.idx <= 0;
+  if(next) next.disabled = state.idx >= state.visible.length-1;
+}
+
+/* ============ 이벤트 ============ */
+document.getElementById('go').addEventListener('click', ()=>{
+  const v = document.getElementById('joinDate').value;
+  if(!v){ alert('가입일을 입력해 주세요.'); return; }
+  render(findGen(v));
+});
+document.getElementById('demo').addEventListener('click', ()=>{
+  document.getElementById('joinDate').value = '2013-06-15';
+  render(findGen('2013-06-15'));
+});
+
+/* 증권 파일 로컬 미리보기 (파싱하지 않음, 서버 전송 없음) */
+document.getElementById('policyFile').addEventListener('change', e=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const url = URL.createObjectURL(file);
+  const isImage = file.type.startsWith('image/');
+  const box = document.getElementById('filePreview');
+  box.innerHTML = `
+    <div class="file-preview-head">
+      <span>${file.name} — 여기서 가입일을 찾아 위 입력창에 적어주세요</span>
+      <button class="icon-circle" id="fileClose" aria-label="파일 닫기">✕</button>
+    </div>
+    ${isImage ? `<img src="${url}" alt="첨부한 증권 이미지">` : `<iframe src="${url}" title="첨부한 증권 PDF"></iframe>`}
+  `;
+  box.hidden = false;
+  box.scrollIntoView({behavior:'smooth', block:'nearest'});
+  document.getElementById('fileClose').addEventListener('click', ()=>{
+    box.hidden = true;
+    box.innerHTML = '';
+    URL.revokeObjectURL(url);
+    document.getElementById('policyFile').value = '';
+  });
+});
+
+document.getElementById('filterRow').addEventListener('click', e=>{
+  const btn = e.target.closest('.chip');
+  if(!btn || !state.gen) return;
+  document.querySelectorAll('.chip').forEach(b=>b.classList.toggle('active', b===btn));
+  state.filter = btn.dataset.filter;
+  renderClauses();
+});
+
+document.getElementById('clauses').addEventListener('click', e=>{
+  const btn = e.target.closest('.tool');
+  if(!btn) return;
+  const i = btn.dataset.i, act = btn.dataset.act, c = state.visible[i];
+
+  if(act==='src'){
+    const box = document.getElementById('src-'+i);
+    const open = box.classList.toggle('on');
+    btn.textContent = open
+      ? (c.real ? '출처 접기' : '원문 접기')
+      : (c.real ? '사례 출처 보기' : '원문 조항 보기');
+  }
+  if(act==='tts'){
+    if(!('speechSynthesis' in window)){ alert('이 브라우저는 소리 읽기를 지원하지 않습니다.'); return; }
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(`${c.h}. ${c.plain}`);
+    u.lang = 'ko-KR';
+    u.rate = document.body.classList.contains('slow') ? 0.85 : 1.0;
+    speechSynthesis.speak(u);
+    btn.textContent = '읽는 중…';
+    u.onend = ()=> btn.textContent = '소리로 듣기';
+  }
+  if(act==='share'){
+    const txt = `[${state.gen.label} 실손 확인]\n${c.h}\n${c.plain}\n\n※ 다시읽기 프로토타입 · 실제 약관 확인 필요`;
+    navigator.clipboard.writeText(txt).then(()=>{
+      btn.textContent = '복사했습니다';
+      setTimeout(()=>btn.textContent='가족에게 보낼 문장 복사', 1600);
+    }).catch(()=>alert(txt));
+  }
+});
+
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.getElementById('modalOverlay').addEventListener('click', e=>{
+  if(e.target.id === 'modalOverlay') closeModal();
+});
+document.addEventListener('keydown', e=>{
+  if(e.key === 'Escape'){ closeModal(); closeSignup(); }
+});
+document.getElementById('modalCta').addEventListener('click', ()=>{
+  closeModal();
+  state.filter = 'all';
+  document.querySelectorAll('.chip').forEach(b=>b.classList.toggle('active', b.dataset.filter==='all'));
+  renderClauses();
+  requestAnimationFrame(()=>{
+    const firstBad = document.querySelector('.clause.bad');
+    if(firstBad){
+      firstBad.scrollIntoView({behavior:'smooth', block:'center'});
+      firstBad.classList.add('flash');
+      setTimeout(()=>firstBad.classList.remove('flash'), 1600);
+    }
+  });
+});
+
+/* 가입 목업 (비기능, 사업 확장 방향 시연용) */
+function closeSignup(){ document.getElementById('signupOverlay').classList.remove('on'); }
+document.getElementById('saveAlertBtn').addEventListener('click', ()=>{
+  document.getElementById('signupOverlay').classList.add('on');
+});
+document.getElementById('signupClose').addEventListener('click', closeSignup);
+document.getElementById('signupOverlay').addEventListener('click', e=>{
+  if(e.target.id === 'signupOverlay') closeSignup();
+});
+document.getElementById('signupSubmit').addEventListener('click', ()=>{
+  const btn = document.getElementById('signupSubmit');
+  btn.textContent = '가입 완료 (목업)';
+  btn.disabled = true;
+  setTimeout(()=>{
+    closeSignup();
+    btn.textContent = '가입하기';
+    btn.disabled = false;
+    document.getElementById('signupEmail').value = '';
+  }, 1000);
+});
+
+document.getElementById('prev').addEventListener('click', ()=>{
+  state.idx = Math.max(0, state.idx-1); updatePager();
+});
+document.getElementById('next').addEventListener('click', ()=>{
+  state.idx = Math.min(state.visible.length-1, state.idx+1); updatePager();
+});
+
+/* 모드 전환 */
+function setMode(slow){
+  document.body.classList.toggle('slow', slow);
+  document.body.classList.toggle('quick', !slow);
+  document.getElementById('mSlow').setAttribute('aria-pressed', String(slow));
+  document.getElementById('mQuick').setAttribute('aria-pressed', String(!slow));
+  if(!slow) speechSynthesis && speechSynthesis.cancel();
+  updatePager();
+}
+document.getElementById('mQuick').addEventListener('click', ()=>setMode(false));
+document.getElementById('mSlow').addEventListener('click', ()=>setMode(true));
+</script>
+</body>
+</html>
