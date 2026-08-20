@@ -1,6 +1,7 @@
 # 별도 저장소로 분리한 프로젝트들.
 # 각 폴더가 자체 .git 을 가지고 있어서, 여기서 같이 추적하면 이력이 이중으로 관리된다.
 cultural/
+extension/
 finedust/
 news/
 seniormarketing/
